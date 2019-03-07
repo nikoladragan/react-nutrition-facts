@@ -1,0 +1,86 @@
+.nav {
+	background-color: pink;
+	height: 50px;
+	box-shadow: 0 0 2px 0 rgba($black, 0.2);
+	padding: 10px;
+	display: flex;
+	position: relative;
+}
+
+.nav__list {
+	display: none;
+	background-color: lightblue;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	top: 100%;
+	padding: 10px;
+	z-index: 1;
+}
+
+.nav__list--active {
+	display: block;
+}
+
+.nav__link {
+	color: $white;
+	text-decoration: none;
+	padding: 5px 0;
+	display: inline-block;
+	transition: $duration $easing;
+	transition-property: color, background-color;
+}
+
+.nav__link--active {
+	background-color: rgba($white, 0.3);
+	color: $black;
+	margin: 0 -15px;
+	padding: 5px 15px;
+	display: block;
+}
+
+.nav__toggle {
+	background-color: transparent;
+	width: 30px;
+	height: 30px;
+	margin-left: auto;
+	padding: 0;
+	position: relative;
+	outline: none;
+}
+
+.nav__toggle--active {
+	.nav__toggle-line--mid {
+		opacity: 0;
+	}
+
+	.nav__toggle-line--first {
+		transform: translate(0, 0) rotate(45deg);
+	}
+
+	.nav__toggle-line--last{
+		transform: translate(0, 0) rotate(-45deg);
+	}
+}
+
+.nav__toggle-line {
+	height: 6px;
+	width: 100%;
+	display: block;
+	background-color: black;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto 0;
+	transition: $duration $easing;
+	transition-property: opacity transform;
+	transform-origin: center center;
+	border-radius: 10px;
+}
+
+.nav__toggle-line--first {
+	transform: translate(0, -200%);
+}
+.nav__toggle-line--last {
+	transform: translate(0, 200%);
+}

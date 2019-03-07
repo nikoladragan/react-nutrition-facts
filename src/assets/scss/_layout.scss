@@ -1,0 +1,28 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.root {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+
+.main {
+	flex: 1;
+	padding: 15px;
+	position: relative;
+}
+
+.title {
+	font-size: 24px;
+	font-weight: 700;
+	margin-bottom: 10px;
+	letter-spacing: 1.4;
+}
+
+.home {
+	// padding-top: 30px;
+}

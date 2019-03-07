@@ -1,0 +1,69 @@
+.progress {
+	// width: 100%;
+	height: 10px;
+	box-shadow: 0 2px 2px -2px $black;
+	position: relative;
+	top: -15px;
+	margin: 0 -15px;
+	left: 0;
+}
+
+.progress--expanded {
+	height: 40px;
+}
+
+.progress__inner {
+	position: absolute;
+	height: 100%;
+	left: 0;
+	top: 0;
+	display: flex;
+	overflow: hidden;
+	&::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: -100%;
+		width: 300%;
+		height: 100%;
+		animation-name: animation;
+		animation-duration: 2s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+		background: repeating-linear-gradient(
+			45deg,
+			rgba($black, 0.2) 0,
+			rgba($black, 0.2) 10px,
+			transparent 10px,
+			transparent 20px,
+		);
+	}
+}
+
+.progress__part {
+	height: 100%;
+	// transition: $duration $easing;
+	// transition-property: width;
+}
+
+.progress__part--blue {
+	background-color: lightblue;
+}
+.progress__part--green {
+	background-color: lightgreen;
+
+}
+.progress__part--orange {
+	background-color: orange;
+}
+
+@keyframes animation {
+	0% {
+		transform: translate(0, 0);
+	}
+	100% {
+		transform: translate(29px, 0)
+	}
+}
+
+		// background: repeating-linear-gradient(45deg, lightblue 0px, lightblue 10px, darken(lightblue, 20) 10px, darken(lightblue, 20) 20px);
