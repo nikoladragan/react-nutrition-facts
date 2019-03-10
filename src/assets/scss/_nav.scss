@@ -2,13 +2,13 @@
 	background-color: pink;
 	height: 50px;
 	box-shadow: 0 0 2px 0 rgba($black, 0.2);
-	padding: 10px;
+	padding: 10px 15px;
 	display: flex;
 	position: relative;
 }
 
 .nav__list {
-	display: none;
+	// display: none;
 	background-color: lightblue;
 	position: absolute;
 	left: 0;
@@ -16,10 +16,14 @@
 	top: 100%;
 	padding: 10px;
 	z-index: 1;
+	transform: skewX(45deg) translate(100%, 0);
+	transform-origin: top left;
+	transition: $duration ease-in-out;
+	transition-property: transform;
 }
 
 .nav__list--active {
-	display: block;
+	transform: skewX(0) translate(0, 0);
 }
 
 .nav__link {
@@ -47,6 +51,11 @@
 	padding: 0;
 	position: relative;
 	outline: none;
+	&:focus {
+		.nav__toggle-line {
+			box-shadow: 0 0 2px 0 $black;
+		}
+	}
 }
 
 .nav__toggle--active {

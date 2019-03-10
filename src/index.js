@@ -5,10 +5,13 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { UserDataProvider } from './context';
 
 const app =
 	<BrowserRouter>
-		<App></App>
+		<UserDataProvider>
+			<App></App>
+		</UserDataProvider>
 	</BrowserRouter>
 ;
 

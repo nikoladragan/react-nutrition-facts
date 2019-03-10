@@ -6,6 +6,7 @@ import LoginPage from './pages/login';
 import AdminPage from './pages/admin';
 import ProfilePage from './pages/profile';
 import Navigation from './components/navigation';
+import OverviewPage from './pages/overview';
 
 function App() {
 	const css = {
@@ -24,6 +25,7 @@ function App() {
 					<Route exact path="/admin" component={AdminPage}></Route>
 					<Route exact path="/login" component={LoginPage}></Route>
 					<Route exact path="/register" component={RegisterPage}></Route>
+					<Route exact path="/overview" component={OverviewPage}></Route>
 				</Switch>
 			</main>
 			<footer className="footer">footer</footer>

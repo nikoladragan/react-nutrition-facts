@@ -15,6 +15,16 @@
 	display: inline-block;
 	outline: none;
 	font-size: 16px;
+	background-color: $white;
+	font-family: inherit;
+	width: 100%;
+	box-sizing: border-box;
+	color: rgba($black, 0.7);
+	font-weight: 400;
+}
+
+.form__input--select {
+	appearance: none;
 }
 
 .form__submit {
@@ -25,4 +35,9 @@
 	box-shadow: 0 0 2px 0 rgba($black, 0.2);
 	outline: none;
 	font-size: 16px;
+	transition: $duration $easing;
+	transition-property: box-shadow;
+	&:active {
+		box-shadow: 3px 3px 2px 0 rgba($black, 0.2);;
+	}
 }

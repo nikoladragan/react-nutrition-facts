@@ -22,6 +22,10 @@ const nav = [
 		url: '/register',
 		text: 'Register',
 	},
+	{
+		url: '/overview',
+		text: 'Overview'
+	}
 ];
 
 const Navigation = () => {
@@ -33,6 +37,11 @@ const Navigation = () => {
 
 	return (
 		<div className="nav">
+			<button className={`nav__toggle${menuState ? ' nav__toggle--active' : ''}`} onClick={() => menuToggleEvent()}>
+				<span className="nav__toggle-line nav__toggle-line--first"></span>
+				<span className="nav__toggle-line nav__toggle-line--mid"></span>
+				<span className="nav__toggle-line nav__toggle-line--last"></span>
+			</button>
 			<ul className={`nav__list${menuState ? ' nav__list--active' : ''}`}>
 				{nav.map(n => {
 					return (
@@ -46,11 +55,6 @@ const Navigation = () => {
 					);
 				})}
 			</ul>
-			<button className={`nav__toggle${menuState ? ' nav__toggle--active' : ''}`} onClick={() => menuToggleEvent()}>
-				<span className="nav__toggle-line nav__toggle-line--first"></span>
-				<span className="nav__toggle-line nav__toggle-line--mid"></span>
-				<span className="nav__toggle-line nav__toggle-line--last"></span>
-			</button>
 		</div>
 	);
 };
