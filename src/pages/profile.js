@@ -7,7 +7,14 @@ const ProfilePage = () => {
 	const { state, dispatch } = useContext(UserDataContext);
 
 	const getBMR = () => {
-		return Math.round(state.gender === 'male' ? getMaleBMR() : getFemaleBMR());
+		const stateGoal = parseInt(state.goal);
+		let goal;
+
+		stateGoal === 1 ? goal = -20 : stateGoal === 3 ? goal = 20 : goal = 0;
+
+		const result = Math.round(state.gender === 'male' ? getMaleBMR() : getFemaleBMR());
+
+		return result + result * goal / 100;
 	};
 
 	const getMaleBMR = () => {
