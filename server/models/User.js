@@ -28,6 +28,13 @@ const schema = new Schema({
 	banned: {
 		type: Boolean,
 		default: false
+	},
+	data: {
+		type: Object,
+		default: {
+			profileSetUp: false,
+			activity: 1
+		}
 	}
 }, { usePushEach: true });
 

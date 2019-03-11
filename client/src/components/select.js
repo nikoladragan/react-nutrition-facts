@@ -8,7 +8,7 @@ const Select = ({label, name, value, callback, data}) => {
 				<select
 					className="form__input form__input--select"
 					id={name}
-					value={value}
+					defaultValue={value}
 					onChange={callback}>
 					{data.map(d => {
 						return <option key={d.text} value={d.value}>{d.text}</option>;

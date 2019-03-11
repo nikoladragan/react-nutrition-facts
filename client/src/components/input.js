@@ -10,7 +10,7 @@ const Input = ({type, label, placeholder, name, value, callback}) => {
 				className="form__input"
 				placeholder={placeholder}
 				name={name}
-				value={value}
+				defaultValue={value}
 				id={name}
 				onChange={callback}/>
 		</>

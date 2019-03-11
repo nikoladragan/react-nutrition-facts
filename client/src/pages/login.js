@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { login } from '../services/userServices';
 import { AuthContext } from '../context/authContext';
+import { UserDataContext } from '../context/userDataContext';
 
 const LoginPage = () => {
 	const { authDispatch } = useContext(AuthContext);
+	const { userDispatch } = useContext(UserDataContext);
 	const [ username, setUsername ] = useState('');
 	const [ password, setPassword ] = useState('');
 
@@ -18,10 +20,14 @@ const LoginPage = () => {
 					authDispatch({
 						type: 'setAuth',
 						data: true
-					})
+					});
 
-					console.log(data);
+					userDispatch({
+						type: 'setInitialData',
+						data: res.data.user.data
+					})
 				}
+
 			)
 			.catch(err => {
 				console.log(err.response);

@@ -12,6 +12,11 @@ function data(success, message) {
 	}
 };
 
+const serverErrorMessage = {
+	success: false,
+	message: 'Server error'
+}
+
 router.post('/register', (req, res) => {
 	const b = req.body;
 	const user = new User();
@@ -89,6 +94,7 @@ router.post('/login', (req, res) => {
 							user: {
 								username: result[0].username,
 								isAdmin: result[0].isAdmin,
+								data: result[0].data,
 								_id: result[0]._id
 							}
 						});
@@ -107,12 +113,10 @@ router.post('/login', (req, res) => {
 router.post('/validate', (req, res) => {
 	const b = req.body;
 
-	console.log(b);
-
 	UserSession.find({
 		_id: mongoose.Types.ObjectId(b.token),
 		isDeleted: false
-	}).populate({ path: 'userId', select: ['username', 'isAdmin'] })
+	}).populate({ path: 'userId', select: ['username', 'isAdmin', 'data', '_id'] })
 		.exec((err, sessions) => {
 			if (err) {
 				return res.status(500).json({
@@ -122,7 +126,18 @@ router.post('/validate', (req, res) => {
 			} else if (sessions.length != 1) {
 				return res.status(400).json(data(false, `Bad verification token`));
 			} else {
-				return res.status(201).json(data(true, sessions[0].userId));
+				const userData = {
+					username: sessions[0].userId.username,
+					isAdmin: sessions[0].userId.isAdmin,
+					data: sessions[0].userId.data
+				}
+				userData.data.id = sessions[0].userId._id;
+
+				return res.status(201).json({
+					...data(true, 'Verified'),
+					token: sessions[0]._id,
+					user: userData
+				});
 			}
 		});
 });
@@ -158,6 +173,30 @@ router.post('/logout', (req, res) => {
 				});
 			}
 		});
+});
+
+router.put('/update', (req, res) => {
+	const b = req.body;
+	const id = b.id;
+	delete b.id;
+
+	User.findOneAndUpdate({
+		_id: mongoose.Types.ObjectId(id)
+	}, {
+		data: b
+	}, {
+		new: true
+	}, (err, result) => {
+		if (err) {
+			return res.status(500).json(serverErrorMessage)
+		}
+
+		return res.status(201).json({
+			success: true,
+			message: 'user data updated',
+			data: result
+		});
+	})
 });
 
 module.exports = router;

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { register } from '../services/userServices';
+import { withRouter } from 'react-router-dom';
 
-const RegisterPage = () => {
+const RegisterPage = (props) => {
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
@@ -11,8 +12,7 @@ const RegisterPage = () => {
 		register(form)
 			.then(
 				res => {
-					const data = res.data;
-					console.log(data);
+					props.history.push('/login');
 				}
 			)
 	}
@@ -38,7 +38,7 @@ const RegisterPage = () => {
 				<button
 					className="form__submit"
 					type="button"
-					onClick={() => submit()}>Login</button>
+					onClick={() => submit()}>Register</button>
 			</form>
 			username: {username} <br />
 			password: {password}
@@ -46,4 +46,4 @@ const RegisterPage = () => {
 	);
 };
 
-export default RegisterPage;
+export default withRouter(RegisterPage);

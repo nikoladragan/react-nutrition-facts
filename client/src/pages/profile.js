@@ -1,32 +1,90 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import Input from '../components/input';
 import { UserDataContext } from '../context/userDataContext';
 import Select from '../components/select';
+import { updateUserData } from '../services/userServices';
+
+const GENDER_DATA = [
+	{
+		text: 'Male',
+		value:'male'
+	},
+	{
+		text: 'Female',
+		value:'female'
+	}
+];
+const ACTIVITY_DATA = [
+	{
+		text: 'Sedentary',
+		value: 1
+	},
+	{
+		text: 'Mild activity level',
+		value: 2
+	},
+	{
+		text: 'Moderate activity level',
+		value: 3
+	},
+	{
+		text: 'Heavy or (Labor-intensive) activity level',
+		value: 4
+	},
+	{
+		text: 'Extreme level',
+		value: 5
+	}
+];
+const GOAL_DATA = [
+	{
+		text: 'Lose weight',
+		value: 1
+	},
+	{
+		text: 'Keep weight',
+		value: 2
+	},
+	{
+		text: 'Gain weight',
+		value: 3
+	}
+];
 
 const ProfilePage = () => {
-	const { state, dispatch } = useContext(UserDataContext);
+	const { userState, userDispatch } = useContext(UserDataContext);
 
-	const getBMR = () => {
-		const stateGoal = parseInt(state.goal);
-		let goal;
+	const [ name, setName ] = useState();
 
-		stateGoal === 1 ? goal = -20 : stateGoal === 3 ? goal = 20 : goal = 0;
+	const [ age, setAge ] = useState();
+	const [ weight, setWeight ] = useState();
+	const [ height, setHeight ] = useState();
 
-		const result = Math.round(state.gender === 'male' ? getMaleBMR() : getFemaleBMR());
+	const [ gender, setGender ] = useState();
+	const [ activity, setActivity ] = useState();
+	const [ goal, setGoal ] = useState();
 
-		return result + result * goal / 100;
+	const getBMR = (d) => {
+		const stateGoal = parseInt(d.goal);
+		let goalP;
+
+		stateGoal === 1 ? goalP = -20 : stateGoal === 3 ? goalP = 20 : goalP = 0;
+
+		const result = Math.round(d.gender === 'male' ? getMaleBMR(d) : getFemaleBMR(d));
+
+		return result + result * goalP / 100;
 	};
 
-	const getMaleBMR = () => {
-		return (88.362 + 13.397 * parseInt(state.weight) + 4.799 * parseInt(state.height) - 5.677 * parseInt(state.age)) * getActivityFactor();
+	const getMaleBMR = (d) => {
+		return (88.362 + 13.397 * parseInt(d.weight) + 4.799 * parseInt(d.height) - 5.677 * parseInt(d.age)) * getActivityFactor(d);
 	};
 
-	const getFemaleBMR = () => {
-		return (447.593 + 9.247 * parseInt(state.weight) + 3.098 * parseInt(state.height) - 4.330 * parseInt(state.age)) * getActivityFactor();
+	const getFemaleBMR = (d) => {
+		return (447.593 + 9.247 * parseInt(d.weight) + 3.098 * parseInt(d.height) - 4.330 * parseInt(d.age)) * getActivityFactor(d);
 	};
 
-	const getActivityFactor = () => {
-		switch(parseInt(state.activity)) {
+	const getActivityFactor = (d) => {
+		switch(parseInt(d.activity)) {
 			case 1:
 				return 1.2;
 			case 2:
@@ -42,22 +100,51 @@ const ProfilePage = () => {
 		}
 	};
 
+	const saveUserData = () => {
+		const data = {
+			...userState,
+			name: name || userState.name,
+			age: age || userState.age,
+			height: height || userState.height,
+			weight: weight || userState.weight,
+			gender: gender || userState.gender,
+			activity: activity || userState.activity,
+			goal: goal || userState.goal,
+		}
+
+		data.calories = getBMR(data);
+
+		updateUserData(data)
+			.then(res => {
+				userDispatch({
+					type: 'setInitialData',
+					data: res.data.data.data // awful naming
+				})
+			});
+	};
+
+	if(!userState.activity) return '';
+
 	return (
 		<div>
 			<div className="form">
+			<div className="form__row">
+					<Input
+						label="Name"
+						type="text"
+						placeholder="Name"
+						name="name"
+						value={userState.name}
+						callback={(e) => setName(e.target.value)} />
+				</div>
 				<div className="form__row">
 					<Input
 						label="Age"
 						type="number"
 						placeholder="Age"
 						name="age"
-						value={state.age}
-						// callback={(e) => state.updateProperty('age', e.target.value)} />
-						callback={(e) => dispatch({
-							type: 'update',
-							property: 'age',
-							data: e.target.value
-						})} />
+						value={userState.age}
+						callback={(e) => setAge(e.target.value)} />
 				</div>
 				<div className="form__row">
 					<Input
@@ -65,12 +152,8 @@ const ProfilePage = () => {
 						type="number"
 						placeholder="Height"
 						name="height"
-						value={state.height}
-						callback={(e) => dispatch({
-							type: 'update',
-							property: 'height',
-							data: e.target.value
-						})} />
+						value={userState.height}
+						callback={(e) => setHeight(e.target.value)} />
 				</div>
 				<div className="form__row">
 					<Input
@@ -78,101 +161,40 @@ const ProfilePage = () => {
 						type="number"
 						placeholder="Weight"
 						name="weight"
-						value={state.weight}
-						callback={(e) => dispatch({
-							type: 'update',
-							property: 'weight',
-							data: e.target.value
-						})} />
+						value={userState.weight}
+						callback={(e) => setWeight(e.target.value)} />
 				</div>
 				<div className="form__row">
 					<Select
 						label="Gender"
 						name="gender"
-						value={state.gender}
-						data={[{text: 'Male', value:'male'}, {text: 'Female', value:'female'}]}
-						callback={(e) => dispatch({
-							type: 'update',
-							property: 'gender',
-							data: e.target.value
-						})} />
+						value={userState.gender}
+						data={GENDER_DATA}
+						callback={(e) => setGender(e.target.value)} />
 				</div>
 				<div className="form__row">
 					<Select
 						label="Activity level"
 						name="activity"
-						value={state.activity}
-						data={[
-							{
-								text: 'Sedentary',
-								value: 1
-							},
-							{
-								text: 'Mild activity level',
-								value: 2
-							},
-							{
-								text: 'Moderate activity level',
-								value: 3
-							},
-							{
-								text: 'Heavy or (Labor-intensive) activity level',
-								value: 4
-							},
-							{
-								text: 'Extreme level',
-								value: 5
-							}
-						]}
-						callback={(e) => dispatch({
-							type: 'update',
-							property: 'activity',
-							data: e.target.value
-						})} />
+						value={userState.activity}
+						data={ACTIVITY_DATA}
+						callback={(e) => setActivity(e.target.value)} />
 				</div>
 				<div className="form__row">
 					<Select
 						label="Goal"
 						name="goal"
-						value={state.goal}
-						data={[
-							{
-								text: 'Lose weight',
-								value: 1
-							},
-							{
-								text: 'Keep weight',
-								value: 2
-							},
-							{
-								text: 'Gain weight',
-								value: 3
-							}
-						]}
-						callback={(e) => dispatch({
-							type: 'update',
-							property: 'goal',
-							data: e.target.value
-						})} />
+						value={userState.goal}
+						data={GOAL_DATA}
+						callback={(e) => setGoal(e.target.value)} />
 				</div>
 				<button
 					className="form__submit"
 					type="button"
-					onClick={() => dispatch({
-						type: 'update',
-						property: 'calories',
-						data: getBMR()}
-					)}>Save</button>
+					onClick={saveUserData}>Save</button>
 			</div>
-
-			Age {state.age}<br />
-			Gender {state.gender}<br />
-			Height {state.height}<br />
-			Weight {state.weight}<br />
-			Activity {state.activity}<br />
-			Goal {state.goal}<br />
 			<hr />
-			{state.calories ? `calories: ${state.calories}` : null}
+			{userState.calories ? `calories: ${userState.calories}` : null}
 		</div>
 	);
 };

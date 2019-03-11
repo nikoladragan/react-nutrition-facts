@@ -2,30 +2,23 @@ import React, { useReducer, createContext } from 'react';
 
 const UserDataContext = createContext();
 
-const initialState = {
-	profileSetUp: true,
-	name: 'Nikola',
-	age: 29,
-	gender: 'female',
-	weight: 80,
-	height: 183,
-	activity: 5,
-	goal: 2,
-	calories: 0
-};
+const initialState = {};
 
 const reducer = (state, action) => {
 	switch (action.type) {
-		case 'update':
-			return {...state, [action.property]: action.data};
+		case 'setInitialData':
+			return {
+				...state,
+				...action.data
+			};
 		default:
 			return state;
 	}
 };
 
 const UserDataProvider = props => {
-	const [state, dispatch] = useReducer(reducer, initialState);
-	const value = {state, dispatch};
+	const [userState, userDispatch] = useReducer(reducer, initialState);
+	const value = {userState, userDispatch};
 
 	return (
 		<UserDataContext.Provider value={value}>

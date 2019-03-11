@@ -50,6 +50,7 @@ const Navigation = (props) => {
 			.then(() => {
 				localStorage.removeItem('app-token');
 
+				setMenuState(false);
 				authDispatch({
 					type: 'setAuth',
 					data: false

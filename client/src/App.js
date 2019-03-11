@@ -10,10 +10,12 @@ import OverviewPage from './pages/overview';
 import { AuthContext } from './context/authContext';
 import { validate } from './services/userServices';
 import NoAccess from './components/noAccess';
+import { UserDataContext } from './context/userDataContext';
 
 
 function App() {
 	const { authState, authDispatch } = useContext(AuthContext);
+	const { userDispatch } = useContext(UserDataContext);
 	const isAuth = authState.isAuthenticated;
 	const css = {
 		height: `${window.innerHeight}px`
@@ -27,6 +29,11 @@ function App() {
 					authDispatch({
 						type: 'setAuth',
 						data: true
+					});
+
+					userDispatch({
+						type: 'setInitialData',
+						data: res.data.user.data
 					})
 				})
 				.catch(err => {
