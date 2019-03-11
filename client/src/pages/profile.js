@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Input from '../components/input';
-import { UserDataContext } from '../context';
+import { UserDataContext } from '../context/userDataContext';
 import Select from '../components/select';
 
 const ProfilePage = () => {

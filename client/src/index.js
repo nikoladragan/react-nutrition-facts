@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { UserDataProvider } from './context';
+import { UserDataProvider } from './context/userDataContext';
 
 const app =
 	<BrowserRouter>
