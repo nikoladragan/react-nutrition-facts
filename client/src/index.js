@@ -6,12 +6,15 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { UserDataProvider } from './context/userDataContext';
+import { AuthProvider } from './context/authContext';
 
 const app =
 	<BrowserRouter>
-		<UserDataProvider>
-			<App></App>
-		</UserDataProvider>
+		<AuthProvider>
+			<UserDataProvider>
+				<App></App>
+			</UserDataProvider>
+		</AuthProvider>
 	</BrowserRouter>
 ;
 

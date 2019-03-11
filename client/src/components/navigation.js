@@ -1,39 +1,63 @@
-import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { logout } from '../services/userServices';
+import { AuthContext } from '../context/authContext';
 
 const nav = [
 	{
 		url: '/',
 		text: 'Home',
+		show: 1
 	},
 	{
 		url: '/profile',
 		text: 'Profile',
+		show: 2
 	},
 	{
 		url: '/admin',
 		text: 'Admin',
+		show: 1
 	},
 	{
 		url: '/login',
 		text: 'Login',
+		show: 3
 	},
 	{
 		url: '/register',
 		text: 'Register',
+		show: 3
 	},
 	{
 		url: '/overview',
-		text: 'Overview'
+		text: 'Overview',
+		show: 2
 	}
 ];
 
-const Navigation = () => {
+const Navigation = (props) => {
 	const [menuState, setMenuState] = useState(false);
+	const { authState, authDispatch } = useContext(AuthContext);
+	const isAuth = authState.isAuthenticated;
 
 	const menuToggleEvent = () => {
 		setMenuState(!menuState);
 	};
+
+	const logoutEvent = () => {
+		logout({ token: localStorage.getItem('app-token') })
+			.then(() => {
+				localStorage.removeItem('app-token');
+
+				authDispatch({
+					type: 'setAuth',
+					data: false
+				});
+
+				props.history.push('/');
+			})
+	}
 
 	return (
 		<div className="nav">
@@ -45,6 +69,7 @@ const Navigation = () => {
 			<ul className={`nav__list${menuState ? ' nav__list--active' : ''}`}>
 				{nav.map(n => {
 					return (
+						(n.show === 1 || (n.show === 2 && isAuth) || (n.show === 3 && !isAuth)) &&
 						<li className="nav__item" key={n.text}>
 							<NavLink
 								exact
@@ -54,9 +79,12 @@ const Navigation = () => {
 						</li>
 					);
 				})}
+				{isAuth && <li className="nav__link">
+					<button onClick={logoutEvent}>Logout</button>
+				</li>}
 			</ul>
 		</div>
 	);
 };
 
-export default Navigation;
+export default withRouter(Navigation);
