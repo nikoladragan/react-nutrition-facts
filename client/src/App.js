@@ -49,7 +49,7 @@ function App() {
 			</header>
 			<main className="main">
 				<Switch>
-					<Route exact path="/" component={HomePage}></Route>
+					<Route path="/home" component={HomePage}></Route>
 					<Route exact path="/profile" component={isAuth ? ProfilePage : NoAccess}></Route>
 					<Route exact path="/overview" component={isAuth ? OverviewPage : NoAccess}></Route>
 					<Route exact path="/admin" component={AdminPage}></Route>

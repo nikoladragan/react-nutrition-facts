@@ -5,7 +5,7 @@ import { AuthContext } from '../context/authContext';
 
 const nav = [
 	{
-		url: '/',
+		url: '/home',
 		text: 'Home',
 		show: 1
 	},
