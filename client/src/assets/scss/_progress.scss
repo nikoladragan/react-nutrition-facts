@@ -4,7 +4,7 @@
 	box-shadow: 0 2px 2px -2px $black;
 	position: relative;
 	top: -15px;
-	margin: 0 -15px;
+	margin: 0 -15px -15px;
 	left: 0;
 }
 
@@ -19,6 +19,8 @@
 	top: 0;
 	display: flex;
 	overflow: hidden;
+	transition: $duration $easing;
+	transition-property: width;
 	&::after {
 		content: '';
 		position: absolute;
@@ -42,8 +44,8 @@
 
 .progress__part {
 	height: 100%;
-	// transition: $duration $easing;
-	// transition-property: width;
+	transition: $duration $easing;
+	transition-property: width;
 }
 
 .progress__part--blue {

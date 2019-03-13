@@ -57,8 +57,8 @@ const Navigation = (props) => {
 				});
 
 				props.history.push('/');
-			})
-	}
+			});
+	};
 
 	return (
 		<div className="nav">
@@ -70,7 +70,7 @@ const Navigation = (props) => {
 			<ul className={`nav__list${menuState ? ' nav__list--active' : ''}`}>
 				{nav.map(n => {
 					return (
-						(n.show === 1 || (n.show === 2 && isAuth) || (n.show === 3 && !isAuth)) &&
+						(n.show === 1 || n.show === 2 && isAuth || n.show === 3 && !isAuth) &&
 						<li className="nav__item" key={n.text}>
 							<NavLink
 								exact

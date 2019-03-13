@@ -21,7 +21,7 @@
 		"semi": 2,
 		"no-undef": 1,
 		"no-unused-vars": 1,
-		"react/prop-types": [2, { "ignore": ["children"] }]
+		"react/prop-types": [2, { "ignore": ["children", "match", "history"] }]
 	},
 	"extends": [
 		"eslint:recommended",

@@ -6,7 +6,7 @@ export const USER = '/user';
 
 export const get = (action, payload) => {
 	return axios.get(`${endpoint}${action}`, { params: payload });
-}
+};
 
 export const post = (action, payload) => {
 	return axios.post(`${endpoint}${action}`, payload);

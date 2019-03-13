@@ -110,7 +110,7 @@ const ProfilePage = () => {
 			gender: gender || userState.gender,
 			activity: activity || userState.activity,
 			goal: goal || userState.goal,
-		}
+		};
 
 		data.calories = getBMR(data);
 
@@ -119,7 +119,7 @@ const ProfilePage = () => {
 				userDispatch({
 					type: 'setInitialData',
 					data: res.data.data.data // awful naming
-				})
+				});
 			});
 	};
 
@@ -128,7 +128,7 @@ const ProfilePage = () => {
 	return (
 		<div>
 			<div className="form">
-			<div className="form__row">
+				<div className="form__row">
 					<Input
 						label="Name"
 						type="text"

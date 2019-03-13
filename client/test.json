@@ -1,0 +1,34 @@
+[
+	{
+		"id": "xxxxxx",
+		"date": "2019 3 12",
+		"meals": [
+			{
+				"label": "dorucak",
+				"nutrition": {},
+				"ingredients": [
+					{
+						"id": "xxxxx",
+						"amount": 1
+					},
+					{
+						"id": "yyyy",
+						"amount": 2
+					}
+				]
+			},
+			{
+
+			},
+			{}
+		]
+	},
+
+
+
+	{
+		"id": "vvvv",
+		"name": "ime jela",
+
+	}
+]
