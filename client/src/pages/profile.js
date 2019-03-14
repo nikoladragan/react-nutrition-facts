@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import Input from '../components/input';
 import { UserDataContext } from '../context/userDataContext';
 import Select from '../components/select';
-import { updateUserData } from '../services/userServices';
+import { updateUserData } from '../services/userService';
 
 const GENDER_DATA = [
 	{
@@ -116,9 +116,10 @@ const ProfilePage = () => {
 
 		updateUserData(data)
 			.then(res => {
+				console.log(res);
 				userDispatch({
 					type: 'setInitialData',
-					data: res.data.data.data // awful naming
+					data: res
 				});
 			});
 	};

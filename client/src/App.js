@@ -8,7 +8,7 @@ import ProfilePage from './pages/profile';
 import Navigation from './components/navigation';
 import OverviewPage from './pages/overview';
 import { AuthContext } from './context/authContext';
-import { validate } from './services/userServices';
+import { validate } from './services/userService';
 import NoAccess from './components/noAccess';
 import { UserDataContext } from './context/userDataContext';
 
@@ -26,6 +26,7 @@ function App() {
 		if (ls) {
 			validate({ token: ls })
 				.then(res => {
+					console.log('validate', res);
 					authDispatch({
 						type: 'setAuth',
 						data: true
@@ -33,11 +34,11 @@ function App() {
 
 					userDispatch({
 						type: 'setInitialData',
-						data: res.data.user.data
-					})
+						data: res.user.data
+					});
 				})
 				.catch(err => {
-					console.log(err.response)
+					console.log('error', err);
 				});
 		}
 	}, []);

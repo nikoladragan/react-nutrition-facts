@@ -3,8 +3,10 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as IconLeftArrow } from './../assets/icons/left-arrow.svg';
 import { ReactComponent as IconRightArrow } from './../assets/icons/right-arrow.svg';
 import { getTodayDate } from '../helpers/helpers';
+import { PropTypes } from 'prop-types';
 
-const HomeContent = ({match, history}) => {
+const DaysNavigation = ({match, history, setDate}) => {
+	// console.log('aaaa', setDate);
 	const today = new Date().getTime();
 	const p = match.params.date;
 	const date = new Date(p);
@@ -25,14 +27,11 @@ const HomeContent = ({match, history}) => {
 	const day = date.getDate();
 	const month = date.getMonth() + 1;
 	const year = date.getFullYear();
-
 	const getFormattedDate = () => `${day < 10 ? `0${day}` : day}.${month < 10 ? `0${month}` : month}.${year}`;
 
 	dateTime > today && history.push(getTodayDate());
 
-	useEffect(() => {
-		console.log('component did mount', match.params);
-	}, [match.params.date]);
+	useEffect(() => setDate(dateTime), [match.params.date]);
 
 	return (
 		<div className="navigation">
@@ -42,7 +41,7 @@ const HomeContent = ({match, history}) => {
 
 			{getFormattedDate()}
 
-			{getDay(false) ?
+			{getDay('next') ?
 				<NavLink to={`/home/${getDay('next')}`} className="navigation__link">
 					<IconRightArrow className="navigation__icon" />
 				</NavLink> :
@@ -54,4 +53,8 @@ const HomeContent = ({match, history}) => {
 	);
 };
 
-export default HomeContent;
+DaysNavigation.propTypes = {
+	setDate: PropTypes.func
+};
+
+export default DaysNavigation;

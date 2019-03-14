@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
-import { logout } from '../services/userServices';
+import { logout } from '../services/userService';
 import { AuthContext } from '../context/authContext';
 
 const nav = [
@@ -60,6 +60,12 @@ const Navigation = (props) => {
 			});
 	};
 
+	const showAlways = (show) => show === 1;
+	const showIfLoggedIn = (show) => isAuth && show === 2;
+	const showIfNotLoggedIn = (show) => show === 3 && !isAuth;
+	const showItem = (n) => showAlways(n.show) || showIfLoggedIn(n.show) || showIfNotLoggedIn(n.show);
+
+
 	return (
 		<div className="nav">
 			<button className={`nav__toggle${menuState ? ' nav__toggle--active' : ''}`} onClick={() => menuToggleEvent()}>
@@ -70,7 +76,7 @@ const Navigation = (props) => {
 			<ul className={`nav__list${menuState ? ' nav__list--active' : ''}`}>
 				{nav.map(n => {
 					return (
-						(n.show === 1 || n.show === 2 && isAuth || n.show === 3 && !isAuth) &&
+						showItem(n) &&
 						<li className="nav__item" key={n.text}>
 							<NavLink
 								exact

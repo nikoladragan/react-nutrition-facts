@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { login } from '../services/userServices';
+import { login } from '../services/userService';
 import { AuthContext } from '../context/authContext';
 import { UserDataContext } from '../context/userDataContext';
 
@@ -15,8 +15,10 @@ const LoginPage = () => {
 		login(form)
 			.then(
 				res => {
-					const data = res.data;
+					console.log(1, res);
+					const data = res;
 					localStorage.setItem('app-token', data.token);
+
 					authDispatch({
 						type: 'setAuth',
 						data: true
@@ -24,15 +26,14 @@ const LoginPage = () => {
 
 					userDispatch({
 						type: 'setInitialData',
-						data: res.data.user.data
-					})
+						data: res.user.data
+					});
 				}
-
 			)
 			.catch(err => {
-				console.log(err.response);
+				console.log(err);
 			});
-	}
+	};
 
 	return (
 		<div>

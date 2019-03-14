@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { register } from '../services/userServices';
+import { register } from '../services/userService';
 import { withRouter } from 'react-router-dom';
 
 const RegisterPage = (props) => {
@@ -10,12 +10,13 @@ const RegisterPage = (props) => {
 		const form = { username, password };
 
 		register(form)
-			.then(
-				res => {
-					props.history.push('/login');
-				}
-			)
-	}
+			.then(() => {
+				props.history.push('/login');
+			})
+			.catch(res => {
+				console.log(res);
+			});
+	};
 
 	return (
 		<div>
