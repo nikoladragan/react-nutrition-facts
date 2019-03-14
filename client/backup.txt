@@ -3,3 +3,12 @@ Users:
 
 Days:
 {"1552172400000":{"5c86c0da421fb49e889df1bb":{"data":"is this new day?"},"somethingelse":{"date":"hohoho"}},"1552258800000":{"5c86c0da421fb49e889df1bb":{"data":"something"}},"1552345200000":{"5c86c0da421fb49e889df1bb":{"data":"what do we have here?"}},"1552518000000":{"5c86c0da421fb49e889df1bb":{"data":"more content!"}}}
+
+
+
+const users = [{"_id":"5c86c0da421fb49e889df1bb","username":"zmuci","password":"test","activated":true,"isAdmin":true,"banned":false,"data":{"name":"Nikola","age":29,"gender":"male","weight":80,"height":183,"activity":3,"goal":3,"calories":3484.8,"profileSetUp":true}},{"_id":"3ofi69euzjsntuap60osi3et","username":"zmuci1","password":"qweqwe","isAdmin":false,"banned":false,"activated":true,"data":{"profileSetUp":false,"activity":1}}];
+
+const days = {"1552172400000":{"5c86c0da421fb49e889df1bb":{"data":"is this new day?"},"somethingelse":{"date":"hohoho"}},"1552258800000":{"5c86c0da421fb49e889df1bb":{"data":"something"}},"1552345200000":{"5c86c0da421fb49e889df1bb":{"data":"what do we have here?"}},"1552518000000":{"5c86c0da421fb49e889df1bb":{"data":"more content!"}}};
+
+localStorage.setItem('usersX', JSON.stringify(users));
+localStorage.setItem('daysX', JSON.stringify(days));
