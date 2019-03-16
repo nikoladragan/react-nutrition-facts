@@ -1,7 +1,14 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-const Input = ({type, label, placeholder, name, value, callback}) => {
+const Input = ({
+	type = 'text',
+	label,
+	placeholder,
+	name,
+	value = '',
+	callback
+}) => {
 	return (
 		<>
 			{label && <label htmlFor={name}>{label}</label>}
@@ -10,7 +17,7 @@ const Input = ({type, label, placeholder, name, value, callback}) => {
 				className="form__input"
 				placeholder={placeholder}
 				name={name}
-				defaultValue={value}
+				value={value}
 				id={name}
 				onChange={callback}/>
 		</>
@@ -25,7 +32,13 @@ Input.propTypes = {
 	callback: PropTypes.func,
 	value: PropTypes.oneOfType([
 		PropTypes.string,
-		PropTypes.number
+		PropTypes.number,
+		PropTypes.bool
+	]),
+	defaultValue: PropTypes.oneOfType([
+		PropTypes.string,
+		PropTypes.number,
+		PropTypes.bool
 	])
 };
 

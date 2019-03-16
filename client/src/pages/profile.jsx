@@ -1,55 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Input from '../components/input';
 import { UserDataContext } from '../context/userDataContext';
 import Select from '../components/select';
 import { updateUserData } from '../services/userService';
-
-const GENDER_DATA = [
-	{
-		text: 'Male',
-		value:'male'
-	},
-	{
-		text: 'Female',
-		value:'female'
-	}
-];
-const ACTIVITY_DATA = [
-	{
-		text: 'Sedentary',
-		value: 1
-	},
-	{
-		text: 'Mild activity level',
-		value: 2
-	},
-	{
-		text: 'Moderate activity level',
-		value: 3
-	},
-	{
-		text: 'Heavy or (Labor-intensive) activity level',
-		value: 4
-	},
-	{
-		text: 'Extreme level',
-		value: 5
-	}
-];
-const GOAL_DATA = [
-	{
-		text: 'Lose weight',
-		value: 1
-	},
-	{
-		text: 'Keep weight',
-		value: 2
-	},
-	{
-		text: 'Gain weight',
-		value: 3
-	}
-];
+import { GOAL_DATA, ACTIVITY_DATA, GENDER_DATA } from '../constants';
 
 const ProfilePage = () => {
 	const { userState, userDispatch } = useContext(UserDataContext);
@@ -63,6 +17,14 @@ const ProfilePage = () => {
 	const [ gender, setGender ] = useState();
 	const [ activity, setActivity ] = useState();
 	const [ goal, setGoal ] = useState();
+
+	useEffect(() => {
+		setName(userState.name);
+		setAge(userState.age);
+		setWeight(userState.weight);
+		setHeight(userState.height);
+
+	}, [userState]);
 
 	const getBMR = (d) => {
 		const stateGoal = parseInt(d.goal);
@@ -135,7 +97,8 @@ const ProfilePage = () => {
 						type="text"
 						placeholder="Name"
 						name="name"
-						value={userState.name}
+						value={name}
+						// defaultValue={userState.name}
 						callback={(e) => setName(e.target.value)} />
 				</div>
 				<div className="form__row">
@@ -144,7 +107,8 @@ const ProfilePage = () => {
 						type="number"
 						placeholder="Age"
 						name="age"
-						value={userState.age}
+						value={age}
+						// defaultValue={userState.age}
 						callback={(e) => setAge(e.target.value)} />
 				</div>
 				<div className="form__row">
@@ -153,7 +117,8 @@ const ProfilePage = () => {
 						type="number"
 						placeholder="Height"
 						name="height"
-						value={userState.height}
+						value={height}
+						defaultValue={userState.height}
 						callback={(e) => setHeight(e.target.value)} />
 				</div>
 				<div className="form__row">
@@ -162,7 +127,8 @@ const ProfilePage = () => {
 						type="number"
 						placeholder="Weight"
 						name="weight"
-						value={userState.weight}
+						value={weight}
+						defaultValue={userState.weight}
 						callback={(e) => setWeight(e.target.value)} />
 				</div>
 				<div className="form__row">

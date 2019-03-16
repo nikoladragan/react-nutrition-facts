@@ -11,6 +11,8 @@ import { AuthContext } from './context/authContext';
 import { validate } from './services/userService';
 import NoAccess from './components/noAccess';
 import { UserDataContext } from './context/userDataContext';
+import { getFood } from './fake';
+// import { getFood } from './fake';
 
 
 function App() {
@@ -26,7 +28,7 @@ function App() {
 		if (ls) {
 			validate({ token: ls })
 				.then(res => {
-					console.log('validate', res);
+					// console.log('validate', res);
 					authDispatch({
 						type: 'setAuth',
 						data: true
@@ -41,6 +43,8 @@ function App() {
 					console.log('error', err);
 				});
 		}
+
+		getFood();
 	}, []);
 
 	return (
