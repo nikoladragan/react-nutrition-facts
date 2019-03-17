@@ -21,7 +21,11 @@
 		"semi": 2,
 		"no-undef": 1,
 		"no-unused-vars": 1,
-		"react/prop-types": [2, { "ignore": ["children", "match", "history"] }]
+		"react/prop-types": [2, { "ignore": ["children", "match", "history"] }],
+		"keyword-spacing": 2,
+		"object-curly-spacing": [2, "always"],
+		"array-bracket-spacing": [2, "always"],
+		"jsx-quotes": [2, "prefer-double"]
 	},
 	"extends": [
 		"eslint:recommended",
