@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
+import { ReactComponent as IconClose } from './../assets/icons/close.svg';
 import { TweenLite } from 'gsap';
 import { ANIMATION_DURATION } from '../constants';
 
@@ -56,7 +57,10 @@ const Modal = ({ children, closeModal }) => {
 	return (
 		<div ref={div => modal = div} className="modal">
 			<div ref={div => modalContainer = div} className="modal__content">
-				<button className="modal__close" onClick={closeModalHandler}>Close modal</button>
+				<button className="modal__close" onClick={closeModalHandler}>
+					<IconClose />
+					<span className="sr-only">Close modal</span>
+				</button>
 				{children}
 			</div>
 		</div>

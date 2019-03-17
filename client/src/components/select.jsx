@@ -4,7 +4,7 @@ import { PropTypes } from 'prop-types';
 const Select = ({ label, name, value, callback, data }) => {
 	return (
 		<>
-			{label && <label htmlFor={name}>{label}</label>}
+			{label && <label className="form__label" htmlFor={name}>{label}</label>}
 				<select
 					className="form__input form__input--select"
 					id={name}

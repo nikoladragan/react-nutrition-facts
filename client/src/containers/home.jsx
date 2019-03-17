@@ -43,10 +43,6 @@ const HomePage = ({ match, history }) => {
 			});
 	}, [ checkDate ]);
 
-	const updateDate = (urlDate) => {
-		setDate(urlDate);
-	};
-
 	const checkHomeUrl = () => {
 		const firstCondition = match.path === history.location.pathname;
 		const secondCondition = match.path + '/' === history.location.pathname;
@@ -56,6 +52,13 @@ const HomePage = ({ match, history }) => {
 	};
 
 	const calculateCaloriesPercentage = () => {
+		if (isEmpty(day) || !userState) return {
+			p: 0,
+			c: 0,
+			f: 0,
+			bar: 0
+		};
+
 		const neededCalories = userState.calories;
 		const { calories, carbs, fat, protein } = day;
 
@@ -76,16 +79,12 @@ const HomePage = ({ match, history }) => {
 
 	return (
 		<div className="home">
-			{
-				!isEmpty(day) && <>
-					<ProgressBar { ...calculateCaloriesPercentage() }/>
-					<div className="home__progress-gap"></div>
-				</>
-			}
+			<ProgressBar { ...calculateCaloriesPercentage() }/>
+			<div className="home__progress-gap"></div>
 			{!isEmpty(userState) && <h1 className="title">Hi {userState.name}!</h1>}
 			<Route
 				path={`${match.url}/:date`}
-				render={props => <DaysNavigation {...props} setDate={updateDate}/>} />
+				render={props => <DaysNavigation {...props} setDate={setDate}/>} />
 			{!isEmpty(day) && <HomeContent content={day}/>}
 			{isEmpty(day) && <NoContent />}
 			<button className="button-action"onClick={() => toggleModal(!modalVisible)}>

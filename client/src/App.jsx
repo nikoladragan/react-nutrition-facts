@@ -68,7 +68,6 @@ function App() {
 						render={() => isAuth ? <Redirect to="/" /> : <RegisterPage />}></Route>
 				</Switch>
 			</main>
-			<footer className="footer">footer</footer>
 		</div>
 	);
 }

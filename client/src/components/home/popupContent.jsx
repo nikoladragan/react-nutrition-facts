@@ -13,7 +13,6 @@ import { saveDay } from '../../services/daysService';
 
 const HomeAddContent = ({ date, closeModal, checkDate }) => {
 	const [ food, setFood ] = useState([]);
-	const [ day ] = useState(false);
 	const [ meals, setMeals ] = useState([]);
 	const [ input, setInput ] = useState('');
 	const [ mealType, setMealType ] = useState(1);
@@ -24,7 +23,7 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 		const value = e.target.value;
 
 		setInput(e.target.value);
-		setFood(getFood(value));
+		setFood(getFood(value, meals));
 	};
 	const handleSelectChange = e => {
 		setMealType(parseInt(e.target.value));
@@ -60,6 +59,8 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 	}, [ meals ]);
 
 	const saveMeals = () => {
+		if (meals.length === 0) return;
+
 		const data = {
 			id: userState.id,
 			mealType,
@@ -83,8 +84,8 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 	return (
 		<Modal closeModal={handleCloseModal}>
 			<div>
-				<Heading level={2} className={'something-else'}>Something?</Heading>
-				<div className="form" test="xx">
+				<Heading level={2} className={'title title--small'}>Add meals</Heading>
+				<div className="form">
 					<div className="form__row">
 						<Select
 							label="Meal type"
@@ -99,6 +100,8 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 							placeholder="Type something..."
 							callback={handleInputChange}
 							name={`nebitno${Math.random()}`} />
+					</div>
+					<div className="form__row">
 						{!isEmpty(food) &&
 							<div className="food-filter">
 								{food.map(f => {
@@ -107,18 +110,22 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 											className="food-filter__button"
 											onClick={() => addMealToState(f.id)}>
 											{f.name}
-											<span className="food-filter__label">{f.calories}</span>
 										</button>
+										<span className="food-filter__label">{f.calories}</span>
 									</div>;
 								})}
 							</div>
 						}
 					</div>
+					{expandedMeals.map(m => {
+						return <div key={Math.random()}>{m.name} - {m.calories}</div>;
+					})}
+					{meals &&
+						<div className="form__action">
+							<button className="form__submit" onClick={saveMeals}>Add day</button>
+						</div>
+					}
 				</div>
-				{expandedMeals.map(m => {
-					return <div key={Math.random()}>{m.name} - {m.calories}</div>;
-				})}
-				{meals && <button onClick={saveMeals}>Add day</button>}
 			</div>
 		</Modal>
 	);

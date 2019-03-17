@@ -2,23 +2,28 @@
 
 }
 .food-filter__row {
-	padding: 5px 0;
 	border-bottom: 1px solid lightgrey;
+	display: flex;
 }
 .food-filter__button {
+	padding: 5px 0;
 	text-align: left;
-	background-color: lightgoldenrodyellow;
+	// background-color: lightgoldenrodyellow;
 	display: block;
-	width: 100%;
-	padding-right: 40px;
+	// width: 100%;
+	// padding-right: 40px;
 	position: relative;
+	flex: 1;
+	background-color: $white;
 }
 .food-filter__label {
-	position: absolute;
-	width: 40px;
-	top: 0;
-	right: 0;
+	padding: 5px 0;
+	// position: absolute;
+	// width: 40px;
+	// top: 0;
+	// right: 0;
 	height: 100%;
-	background-color: lightcyan;
+	// background-color: lightcyan;
 	text-align: right;
+	padding-left: $gap;
 }

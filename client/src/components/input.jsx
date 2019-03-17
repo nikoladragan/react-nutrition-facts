@@ -11,7 +11,7 @@ const Input = ({
 }) => {
 	return (
 		<>
-			{label && <label htmlFor={name}>{label}</label>}
+			{label && <label className="form__label" htmlFor={name}>{label}</label>}
 			<input
 				type={type}
 				className="form__input"

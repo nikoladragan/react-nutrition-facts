@@ -1,0 +1,34 @@
+.cards {
+
+}
+
+.card {
+	@extend %card;
+	opacity: 0;
+}
+
+.card--show {
+	opacity: 1;
+}
+
+.card__top {
+	display: flex;
+	margin-bottom: $gap;
+	align-items: flex-start;
+}
+
+.card__item {
+	border-bottom: 1px solid $border;
+	padding-bottom: $gap;
+	margin-bottom: $gap;
+	&:last-child {
+		margin-bottom: 0;
+		border-bottom: 0;
+		padding-bottom: 0;
+	}
+}
+
+.card__image {
+	margin-right: $gap;
+	width: 30px;
+}

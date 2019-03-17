@@ -1,5 +1,5 @@
 import { getFoodById } from './foodService';
-import { getLocalStorage, isEmpty } from '../helpers/helpers';
+import { getLocalStorage, isEmpty, generateId } from '../helpers/helpers';
 
 export const getDay = (date, id) => new Promise((resolve, reject) => {
 	const days = localStorage.getItem('days');
@@ -77,7 +77,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 	if (!isEmpty(day)) {
 		totalCalories += day.calories;
 		totalCarbs += day.carbs;
-		totalFats += day.fats;
+		totalFats += day.fat;
 		totalProtein += day.protein;
 
 		finalData = {
@@ -89,6 +89,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 		};
 
 		finalData.meals.push({
+			id: generateId(),
 			mealType: mealTypeLabel,
 			content: expandedMeals
 		});
@@ -101,6 +102,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 			protein: totalProtein,
 			meals: [
 				{
+					id: generateId(),
 					mealType: mealTypeLabel,
 					content: expandedMeals
 				}

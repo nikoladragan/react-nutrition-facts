@@ -1,17 +1,25 @@
 .form {
 	position: relative;
-	margin-bottom: 15px;
+	margin-bottom: $gap;
 }
 
 .form__row {
-	margin-bottom: 15px;
+	margin-bottom: $gap;
+}
+
+.form__action {
+	margin-top: $gap * 2;
+}
+
+.form__label {
+	line-height: 1.2;
 }
 
 .form__input {
-	border: 1px solid rgba($black, 0.5);
-	border-radius: 5px;
-	padding: 5px 10px;
-	box-shadow: 0 0 2px 0 rgba($black, 0.2);
+	border: 1px solid $border;
+	border-radius: $radius;
+	padding: 5px $gap;
+	box-shadow: 0 0 3px 0 rgba($black, 0.2);
 	display: inline-block;
 	outline: none;
 	font-size: 16px;
@@ -25,22 +33,29 @@
 
 .form__input--select {
 	appearance: none;
+	background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%20129%20129%22%3E%3Cpath%20d%3D%22M121.3%2040.4c.8-.8%201.2-1.8%201.2-2.9s-.4-2.1-1.2-2.9c-1.6-1.6-4.2-1.6-5.8%200l-51%2051-51-51c-1.6-1.6-4.2-1.6-5.8%200s-1.6%204.2%200%205.8l53.9%2054c1.6%201.6%204.2%201.6%205.8%200l53.9-54z%22/%3E%3C/svg%3E');
+	background-repeat: no-repeat;
+	background-position: right $gap center;
+	background-size: 20px;
+	padding-right: 35px;
 }
 
 .form__submit {
-	border-radius: 5px;
-	padding: 5px 10px;
-	background-color: pink;
-	border: 1px solid rgba($black, 0.5);
-	box-shadow: 0 0 2px 0 rgba($black, 0.2);
+	border-radius: $radius;
+	padding: #{$gap / 2} $gap;
+	background-color: $action;
+	color: $white;
+	border: 0	;
+	box-shadow: $box-shadow;
 	outline: none;
+	width: 100%;
 	font-size: 16px;
 	transition: $duration $easing;
 	transition-property: box-shadow, background-color;
 	&:active {
-		box-shadow: 3px 3px 2px 0 rgba($black, 0.2);;
+		box-shadow: 3px 3px 2px 0 rgba($black, 0.2);
 	}
 	&:focus {
-		background-color: darken(pink, 5);
+		background-color: darken($action, 20);
 	}
 }

@@ -2,22 +2,44 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 15px 0;
-	background-color: lightsteelblue;
+
+	@extend %card;
 }
 
 .navigation__link {
 	display: inline-block;
-	padding: 10px;
-	background-color: lightgreen;
+	padding: $gap;
+	background-color: $action;
+	outline: none;
+	transition: $duration $easing;
+	transition-property: box-shadow, background-color, opacity;
+
+	&:first-child {
+		margin-left: #{-$gap};
+		border-top-right-radius: $gap;
+		border-bottom-right-radius: $gap;
+	}
+
+	&:last-child {
+		margin-right: #{-$gap};
+		border-top-left-radius: $gap;
+		border-bottom-left-radius: $gap;
+	}
+
+	&:focus,
+	&:active {
+		box-shadow: $box-shadow;
+		background-color: darken($action, 20);
+	}
 }
 
 .navigation__link--disabled {
 	opacity: 0.5;
-	background-color: lightgray;
+	background-color: $disabled;
 }
 
 .navigation__icon {
 	width: 20px;
 	height: 20px;
+	fill: $white;
 }

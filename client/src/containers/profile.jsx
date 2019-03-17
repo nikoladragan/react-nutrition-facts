@@ -152,10 +152,12 @@ const ProfilePage = () => {
 						data={GOAL_DATA}
 						callback={(e) => setGoal(e.target.value)} />
 				</div>
-				<button
-					className="form__submit"
-					type="button"
-					onClick={saveUserData}>Save</button>
+				<div className="form__action">
+					<button
+						className="form__submit"
+						type="button"
+						onClick={saveUserData}>Save</button>
+				</div>
 			</div>
 			<hr />
 			{userState.calories ? `calories: ${userState.calories}` : null}
