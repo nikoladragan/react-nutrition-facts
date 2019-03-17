@@ -17,8 +17,8 @@ const reducer = (state, action) => {
 };
 
 const UserDataProvider = props => {
-	const [userState, userDispatch] = useReducer(reducer, initialState);
-	const value = {userState, userDispatch};
+	const [ userState, userDispatch ] = useReducer(reducer, initialState);
+	const value = { userState, userDispatch };
 
 	return (
 		<UserDataContext.Provider value={value}>

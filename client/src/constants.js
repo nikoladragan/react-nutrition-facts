@@ -65,3 +65,36 @@ export const MEAL_TYPE_DATA = [
 		value: 4
 	}
 ];
+
+export const NAV_DATA = [
+	{
+		url: '/home',
+		text: 'Home',
+		show: 2
+	},
+	{
+		url: '/profile',
+		text: 'Profile',
+		show: 2
+	},
+	{
+		url: '/admin',
+		text: 'Admin',
+		show: 1
+	},
+	{
+		url: '/login',
+		text: 'Login',
+		show: 3
+	},
+	{
+		url: '/register',
+		text: 'Register',
+		show: 3
+	},
+	{
+		url: '/overview',
+		text: 'Overview',
+		show: 2
+	}
+];

@@ -16,6 +16,7 @@ const Input = ({
 				type={type}
 				className="form__input"
 				placeholder={placeholder}
+				autoComplete="somethingthatwontgettriggered"
 				name={name}
 				value={value}
 				id={name}

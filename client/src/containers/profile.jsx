@@ -24,7 +24,7 @@ const ProfilePage = () => {
 		setWeight(userState.weight);
 		setHeight(userState.height);
 
-	}, [userState]);
+	}, [ userState ]);
 
 	const getBMR = (d) => {
 		const stateGoal = parseInt(d.goal);
@@ -46,7 +46,7 @@ const ProfilePage = () => {
 	};
 
 	const getActivityFactor = (d) => {
-		switch(parseInt(d.activity)) {
+		switch (parseInt(d.activity)) {
 			case 1:
 				return 1.2;
 			case 2:
@@ -86,7 +86,7 @@ const ProfilePage = () => {
 			});
 	};
 
-	if(!userState.activity) return '';
+	if (!userState.activity) return '';
 
 	return (
 		<div>

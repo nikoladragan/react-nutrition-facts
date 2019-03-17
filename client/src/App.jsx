@@ -1,18 +1,19 @@
 import React, { useContext, useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import HomePage from './pages/home';
-import RegisterPage from './pages/register';
-import LoginPage from './pages/login';
-import AdminPage from './pages/admin';
-import ProfilePage from './pages/profile';
+import HomePage from './containers/home';
+import RegisterPage from './containers/register';
+import LoginPage from './containers/login';
+import AdminPage from './containers/admin';
+import ProfilePage from './containers/profile';
 import Navigation from './components/navigation';
-import OverviewPage from './pages/overview';
+import OverviewPage from './containers/overview';
 import { AuthContext } from './context/authContext';
 import { validate } from './services/userService';
 import NoAccess from './components/noAccess';
 import { UserDataContext } from './context/userDataContext';
 import { getFood } from './fake';
 // import { getFood } from './fake';
+import WelcomePage from './containers/welcome';
 
 
 function App() {
@@ -28,7 +29,6 @@ function App() {
 		if (ls) {
 			validate({ token: ls })
 				.then(res => {
-					// console.log('validate', res);
 					authDispatch({
 						type: 'setAuth',
 						data: true
@@ -54,7 +54,8 @@ function App() {
 			</header>
 			<main className="main">
 				<Switch>
-					<Route path="/home" component={HomePage}></Route>
+					<Route path="/" exact component={WelcomePage}></Route>
+					<Route path="/home" component={isAuth ? HomePage : NoAccess}></Route>
 					<Route exact path="/profile" component={isAuth ? ProfilePage : NoAccess}></Route>
 					<Route exact path="/overview" component={isAuth ? OverviewPage : NoAccess}></Route>
 					<Route exact path="/admin" component={AdminPage}></Route>

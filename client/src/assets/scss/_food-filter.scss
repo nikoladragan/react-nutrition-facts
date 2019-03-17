@@ -1,0 +1,24 @@
+.food-filter {
+
+}
+.food-filter__row {
+	padding: 5px 0;
+	border-bottom: 1px solid lightgrey;
+}
+.food-filter__button {
+	text-align: left;
+	background-color: lightgoldenrodyellow;
+	display: block;
+	width: 100%;
+	padding-right: 40px;
+	position: relative;
+}
+.food-filter__label {
+	position: absolute;
+	width: 40px;
+	top: 0;
+	right: 0;
+	height: 100%;
+	background-color: lightcyan;
+	text-align: right;
+}

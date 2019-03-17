@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-const Select = ({label, name, value, callback, data}) => {
+const Select = ({ label, name, value, callback, data }) => {
 	return (
 		<>
 			{label && <label htmlFor={name}>{label}</label>}

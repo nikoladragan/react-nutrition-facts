@@ -3,8 +3,8 @@ import { register } from '../services/userService';
 import { withRouter } from 'react-router-dom';
 
 const RegisterPage = (props) => {
-	const [username, setUsername] = useState('');
-	const [password, setPassword] = useState('');
+	const [ username, setUsername ] = useState('');
+	const [ password, setPassword ] = useState('');
 
 	const submit = () => {
 		const form = { username, password };

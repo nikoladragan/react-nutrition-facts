@@ -14,7 +14,7 @@ export const login = data => new Promise((resolve, reject) => {
 	const users = getLocalStorage('users');
 	const result = users.filter(u => u.username === username && u.password === password);
 
-	if(result.length > 0) {
+	if (result.length > 0) {
 		const res = result[0];
 		const token = generateId(24);
 
@@ -47,13 +47,13 @@ export const validate = data => new Promise(resolve => {
 	const userSession = getLocalStorage('userSession');
 	const result = userSession.filter(s => !s.isDeleted && s._id === data.token);
 
-	if(result.length) {
+	if (result.length) {
 		const res = result[0];
 		const id = res.userId;
 		const users = getLocalStorage('users');
 		const user = users.filter(u => u._id === id)[0];
 
-		if(user) {
+		if (user) {
 			const userData = {
 				username: user.username,
 				isAdmin: user.isAdmin,
@@ -81,7 +81,7 @@ export const logout = data => new Promise((resolve, reject) => {
 	const userSession = getLocalStorage('userSession');
 	const result = userSession.filter(u => u._id === data.token)[0];
 
-	if(result) {
+	if (result) {
 		const leftover = userSession.filter(u => u._id !== data.token);
 
 		localStorage.setItem('userSession', JSON.stringify(leftover));
@@ -99,11 +99,11 @@ export const register = data => new Promise((resolve, reject) => {
 	const users = getLocalStorage('users');
 
 	const result = users.filter(u => username === u.username);
-	if(username.length < 3) {
+	if (username.length < 3) {
 		reject('username too short');
-	} else if(password.length < 3) {
+	} else if (password.length < 3) {
 		reject('password too short');
-	} else if(result.length) {
+	} else if (result.length) {
 		reject('username taken');
 	} else {
 		const newUser = {
@@ -132,7 +132,7 @@ export const updateUserData = data => new Promise((resolve, reject) => {
 
 	const leftover = users.filter(u => u._id !== data.id);
 
-	if(result) {
+	if (result) {
 		result.data = data;
 		leftover.push(result);
 		localStorage.setItem('users', JSON.stringify(users));

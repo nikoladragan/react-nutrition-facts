@@ -1,7 +1,7 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
 
-const Modal = ({children, closeModal}) => {
+const Modal = ({ children, closeModal }) => {
 	return (
 		<div className="modal">
 			<div className="modal__content">

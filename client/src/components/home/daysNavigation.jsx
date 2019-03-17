@@ -1,12 +1,12 @@
 
 import React, { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as IconLeftArrow } from './../assets/icons/left-arrow.svg';
-import { ReactComponent as IconRightArrow } from './../assets/icons/right-arrow.svg';
-import { getTodayDate } from '../helpers/helpers';
+import { ReactComponent as IconLeftArrow } from './../../assets/icons/left-arrow.svg';
+import { ReactComponent as IconRightArrow } from './../../assets/icons/right-arrow.svg';
+import { getTodayDate } from '../../helpers/helpers';
 import { PropTypes } from 'prop-types';
 
-const DaysNavigation = ({match, history, setDate}) => {
+const DaysNavigation = ({ match, history, setDate }) => {
 	// console.log('aaaa', setDate);
 	const today = new Date().getTime();
 	const p = match.params.date;
@@ -32,7 +32,7 @@ const DaysNavigation = ({match, history, setDate}) => {
 
 	dateTime > today && history.push(getTodayDate());
 
-	useEffect(() => setDate(dateTime), [match.params.date]);
+	useEffect(() => setDate(dateTime), [ match.params.date ]);
 
 	return (
 		<div className="navigation">

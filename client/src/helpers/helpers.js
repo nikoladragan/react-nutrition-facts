@@ -29,11 +29,34 @@ export const getRandomInt = (min = 0, max) => {
 export const shuffleArray = a => {
 	for (let i = a.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
-		[a[i], a[j]] = [a[j], a[i]];
+		[ a[i], a[j] ] = [ a[j], a[i] ];
 	}
 	return a;
 };
 
 export const isEmpty = a => {
-	return a.length === 0;
+	const hasOwnProperty = Object.prototype.hasOwnProperty;
+
+	// null and undefined are "empty"
+	if (a === null) return true;
+	if (a === undefined) return true;
+
+	// Assume if it has a length property with a non-zero value
+	// that that property is correct.
+	if (a.length > 0) return false;
+	if (a.length === 0) return true;
+
+	// If it isn't an object at this point
+	// it is empty, but it can't be anything *but* empty
+	// Is it empty?  Depends on your application.
+	if (typeof a !== 'object') return true;
+
+	// Otherwise, does it have any properties of its own?
+	// Note that this doesn't handle
+	// toString and valueOf enumeration bugs in IE < 9
+	for (const key in a) {
+		if (hasOwnProperty.call(a, key)) return false;
+	}
+
+	return true;
 };

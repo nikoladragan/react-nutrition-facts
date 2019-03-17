@@ -1,7 +1,7 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 const OverviewPage = () => {
-	const [data, setData] = useState(false);
+	const [ data, setData ] = useState(false);
 
 	useEffect(() => {
 		const ls = JSON.parse(localStorage.getItem('food'));

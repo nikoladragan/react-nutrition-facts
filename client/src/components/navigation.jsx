@@ -2,42 +2,10 @@ import React, { useState, useContext } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { logout } from '../services/userService';
 import { AuthContext } from '../context/authContext';
-
-const nav = [
-	{
-		url: '/home',
-		text: 'Home',
-		show: 1
-	},
-	{
-		url: '/profile',
-		text: 'Profile',
-		show: 2
-	},
-	{
-		url: '/admin',
-		text: 'Admin',
-		show: 1
-	},
-	{
-		url: '/login',
-		text: 'Login',
-		show: 3
-	},
-	{
-		url: '/register',
-		text: 'Register',
-		show: 3
-	},
-	{
-		url: '/overview',
-		text: 'Overview',
-		show: 2
-	}
-];
+import { NAV_DATA } from '../constants';
 
 const Navigation = (props) => {
-	const [menuState, setMenuState] = useState(false);
+	const [ menuState, setMenuState ] = useState(false);
 	const { authState, authDispatch } = useContext(AuthContext);
 	const isAuth = authState.isAuthenticated;
 
@@ -74,7 +42,7 @@ const Navigation = (props) => {
 				<span className="nav__toggle-line nav__toggle-line--last"></span>
 			</button>
 			<ul className={`nav__list${menuState ? ' nav__list--active' : ''}`}>
-				{nav.map(n => {
+				{NAV_DATA.map(n => {
 					return (
 						showItem(n) &&
 						<li className="nav__item" key={n.text}>
