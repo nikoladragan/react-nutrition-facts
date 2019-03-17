@@ -1,3 +1,4 @@
+// Select data
 export const GENDER_DATA = [
 	{
 		text: 'Male',
@@ -8,7 +9,6 @@ export const GENDER_DATA = [
 		value:'female'
 	}
 ];
-
 export const ACTIVITY_DATA = [
 	{
 		text: 'Sedentary',
@@ -31,7 +31,6 @@ export const ACTIVITY_DATA = [
 		value: 5
 	}
 ];
-
 export const GOAL_DATA = [
 	{
 		text: 'Lose weight',
@@ -46,7 +45,6 @@ export const GOAL_DATA = [
 		value: 3
 	}
 ];
-
 export const MEAL_TYPE_DATA = [
 	{
 		text: 'Breakfast',
@@ -66,6 +64,7 @@ export const MEAL_TYPE_DATA = [
 	}
 ];
 
+// Navigation data
 export const NAV_DATA = [
 	{
 		url: '/home',
@@ -98,3 +97,7 @@ export const NAV_DATA = [
 		show: 2
 	}
 ];
+
+
+// Animation constants
+export const ANIMATION_DURATION = 0.2;
