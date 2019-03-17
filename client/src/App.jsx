@@ -12,7 +12,6 @@ import { validate } from './services/userService';
 import NoAccess from './components/noAccess';
 import { UserDataContext } from './context/userDataContext';
 import { getFood } from './fake';
-// import { getFood } from './fake';
 import WelcomePage from './containers/welcome';
 
 
@@ -62,11 +61,11 @@ function App() {
 					<Route
 						exact
 						path="/login"
-						render={() => isAuth ? <Redirect to='/' /> : <LoginPage />}></Route>
+						render={() => isAuth ? <Redirect to="/" /> : <LoginPage />}></Route>
 					<Route
 						exact
 						path="/register"
-						render={() => isAuth ? <Redirect to='/' /> : <RegisterPage />}></Route>
+						render={() => isAuth ? <Redirect to="/" /> : <RegisterPage />}></Route>
 				</Switch>
 			</main>
 			<footer className="footer">footer</footer>

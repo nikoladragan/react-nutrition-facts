@@ -4,14 +4,11 @@ import { getRandomInt, capitalizeFirstLetter } from './helpers/helpers';
 export const getFood = () => {
 	const ls = localStorage.getItem('food');
 
-	if(ls) return;
+	if (ls) return;
 
 	const	data = [];
 
-	for(let i = 0; i < 200; i++) {
-		// const lorem = new LoremIpsum();
-		// const calories = getRandomInt(30, 400);
-
+	for (let i = 0; i < 200; i++) {
 		const f = {
 			id: i,
 			name: randomWords({ min: 2, max: 6, join: ' ' }),

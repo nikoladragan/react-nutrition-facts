@@ -98,7 +98,6 @@ const ProfilePage = () => {
 						placeholder="Name"
 						name="name"
 						value={name}
-						// defaultValue={userState.name}
 						callback={(e) => setName(e.target.value)} />
 				</div>
 				<div className="form__row">
@@ -108,7 +107,6 @@ const ProfilePage = () => {
 						placeholder="Age"
 						name="age"
 						value={age}
-						// defaultValue={userState.age}
 						callback={(e) => setAge(e.target.value)} />
 				</div>
 				<div className="form__row">

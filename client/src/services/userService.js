@@ -1,4 +1,3 @@
-// import * as Api from './api';
 import { generateId, getLocalStorage } from '../helpers/helpers';
 
 // export const login = data => Api.post(Api.USER + '/login', data);

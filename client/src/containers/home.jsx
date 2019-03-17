@@ -44,12 +44,6 @@ const HomePage = ({ match, history }) => {
 			});
 	}, [ checkDate ]);
 
-	useEffect(() => {
-		// setTimeout(() => {
-		// 	calculateCaloriesPercentage();
-		// }, 1000);
-	}, [ day ]);
-
 	const updateDate = (urlDate) => {
 		setDate(urlDate);
 	};
@@ -66,7 +60,6 @@ const HomePage = ({ match, history }) => {
 		const neededCalories = userState.calories;
 		const { calories, carbs, fat, protein } = day;
 
-		// const p =
 		const sum = carbs + fat + protein;
 
 		const bar = calories * 100 / neededCalories;

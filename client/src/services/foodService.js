@@ -5,12 +5,7 @@ export const getFood = (query, numOfResults = 5) => {
 
 	const food = getLocalStorage('food');
 	const result = food.filter(f => f.name.toLowerCase().indexOf(query.toLowerCase()) > -1 );
-	// result = result.map(r => {
-	// 	return {
-	// 		name: r.name,
-	// 		id: r.id,
-	// 	};
-	// });
+
 	return result.slice(0, numOfResults);
 };
 

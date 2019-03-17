@@ -7,7 +7,6 @@ import { getTodayDate } from '../../helpers/helpers';
 import { PropTypes } from 'prop-types';
 
 const DaysNavigation = ({ match, history, setDate }) => {
-	// console.log('aaaa', setDate);
 	const today = new Date().getTime();
 	const p = match.params.date;
 	const date = new Date(p);

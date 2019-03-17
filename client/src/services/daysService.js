@@ -59,11 +59,8 @@ export const saveDay = data => new Promise((resolve, reject) => {
 
 	const { id, date } = data;
 
-	console.log('a?', data);
-
 	// check if there are some data for this day;
 	const days = getLocalStorage('days');
-	// const date = days[date];
 	const day = days[date][id];
 
 	let totalCalories = 0;
@@ -152,14 +149,3 @@ const getMealTypeLabel = (number) => {
 			return null;
 	}
 };
-// const setInitialDay = (date, id) => {
-// 	const data = {
-// 		[date]: {
-// 			date,
-// 			id,
-// 			data: {}
-// 		}
-// 	};
-
-// 	return data;
-// };
