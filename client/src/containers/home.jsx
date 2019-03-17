@@ -35,7 +35,6 @@ const HomePage = ({ match, history }) => {
 	useEffect(() => {
 		checkDate && getDay(date, userState.id)
 			.then(res => {
-				console.log('ovo?', res);
 				setDay(res);
 			})
 			.catch(err => {

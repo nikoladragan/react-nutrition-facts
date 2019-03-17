@@ -89,8 +89,6 @@ export const logout = data => new Promise((resolve, reject) => {
 	} else {
 		reject('bad');
 	}
-
-	console.log(data, userSession);
 });
 
 export const register = data => new Promise((resolve, reject) => {

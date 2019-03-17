@@ -78,7 +78,6 @@ const ProfilePage = () => {
 
 		updateUserData(data)
 			.then(res => {
-				console.log(res);
 				userDispatch({
 					type: 'setInitialData',
 					data: res

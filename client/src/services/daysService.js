@@ -2,32 +2,21 @@ import { getFoodById } from './foodService';
 import { getLocalStorage, isEmpty } from '../helpers/helpers';
 
 export const getDay = (date, id) => new Promise((resolve, reject) => {
-	console.log('get day!');
 	const days = localStorage.getItem('days');
 
 	// did user provide day?
 	if (date) {
 		// do we have any records?
 		if (days) {
-			console.log('there are days');
 			const daysObject = JSON.parse(days);
 
 			// check if days is created
 			if (daysObject[date]) {
-				console.log('this date is present', date);
-
 				// check if current id is present
 				if (!daysObject[date][id]) {
-					console.log('this id is new', id);
-
 					daysObject[date][id] = {};
-				} else {
-					console.log('we have this id', id);
-
 				}
 			} else {
-				console.log('this date is not present', date);
-
 				// create day + user id
 				daysObject[date] = {
 					[id]: {}
@@ -37,8 +26,6 @@ export const getDay = (date, id) => new Promise((resolve, reject) => {
 			localStorage.setItem('days', JSON.stringify(daysObject));
 			resolve(daysObject[date][id]);
 		} else {
-			console.log('no days at all?');
-
 			// nothing is present, create object with day + id
 			const dayObject = {
 				[date]: {
@@ -87,11 +74,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 
 	const mealTypeLabel = getMealTypeLabel(data.mealType);
 
-	console.log(day, !isEmpty(day));
-
 	if (!isEmpty(day)) {
-		console.log('append meal');
-
 		totalCalories += day.calories;
 		totalCarbs += day.carbs;
 		totalFats += day.fats;
@@ -111,7 +94,6 @@ export const saveDay = data => new Promise((resolve, reject) => {
 		});
 
 	} else {
-		console.log('empty day');
 		finalData = {
 			calories: totalCalories,
 			carbs: totalCarbs,

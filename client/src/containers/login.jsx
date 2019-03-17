@@ -15,7 +15,6 @@ const LoginPage = () => {
 		login(form)
 			.then(
 				res => {
-					console.log(1, res);
 					const data = res;
 					localStorage.setItem('app-token', data.token);
 

@@ -45,11 +45,7 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 	};
 
 	useEffect(() => {
-		console.log(meals);
 		if (meals.length > 0) {
-
-			console.log(meals);
-
 			meals.map(m => {
 				const id = m.id;
 
@@ -62,12 +58,6 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 			});
 		}
 	}, [ meals ]);
-
-	useEffect(() => {
-		if (day) {
-			console.log(day);
-		}
-	}, [ day.meals ]);
 
 	const saveMeals = () => {
 		const data = {
