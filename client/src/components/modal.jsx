@@ -1,57 +1,45 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
 import { ReactComponent as IconClose } from './../assets/icons/close.svg';
-import { TweenLite } from 'gsap';
-import { ANIMATION_DURATION } from '../constants';
+
+import anime from 'animejs';
+import { ANIMATION_DURATION, ANIMATION_DEFAULTS } from '../constants';
 
 const Modal = ({ children, closeModal }) => {
 	let modal = null;
 	let modalContainer = null;
 
-	let tween = null;
-	let tween2 = null;
-
 	useEffect(() => {
-		tween = TweenLite.fromTo(
-			modal,
-			ANIMATION_DURATION,
-			{ opacity: 0 },
-			{ opacity: 1 }
-		);
+		anime({
+			targets: modal,
+			opacity: [ 0, 1 ],
+			...ANIMATION_DEFAULTS,
+		});
 
-		tween2 = TweenLite.fromTo(
-			modalContainer,
-			ANIMATION_DURATION,
-			{
-				y: 100,
-				opacity: 0
-			},
-			{ y: 0, opacity: 1 }
-		);
-		tween2.delay(ANIMATION_DURATION / 2);
+		anime({
+			targets: modalContainer,
+			delay: ANIMATION_DURATION / 2,
+			translateY: [ 100, 0 ],
+			opacity: [ 0, 1 ],
+			...ANIMATION_DEFAULTS,
+		});
 	}, []);
 
 	const closeModalHandler = () => {
-		tween2 = TweenLite.fromTo(
-			modalContainer,
-			ANIMATION_DURATION,
-			{ y: 0, opacity: 1 },
-			{ y: 100, opacity: 0 }
-		);
+		anime({
+			targets: modalContainer,
+			translateY: [ 0, 100 ],
+			opacity: [ 1, 0 ],
+			...ANIMATION_DEFAULTS,
+		});
 
-		tween = TweenLite.fromTo(
-			modal,
-			ANIMATION_DURATION,
-			{ opacity: 1 },
-			{ opacity: 0 }
-		);
-
-		tween.eventCallback(
-			'onComplete',
-			closeModal
-		);
-
-		tween.delay(ANIMATION_DURATION / 2);
+		anime({
+			targets: modal,
+			opacity: [ 1, 0 ],
+			delay: ANIMATION_DURATION / 2,
+			...ANIMATION_DEFAULTS,
+			complete: closeModal
+		});
 	};
 
 	return (

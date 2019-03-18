@@ -1,7 +1,7 @@
 .nav {
-	background-color: $white;
+	// background-color: $white;
 	height: 50px;
-	box-shadow: $box-shadow;
+	// box-shadow: $box-shadow;
 	padding: $gap;
 	text-align: right;
 	position: fixed;
@@ -56,11 +56,6 @@
 	padding: 0;
 	position: relative;
 	outline: none;
-	&:focus {
-		.nav__toggle-line {
-			box-shadow: 0 0 2px 0 $black;
-		}
-	}
 }
 
 .nav__toggle--active {

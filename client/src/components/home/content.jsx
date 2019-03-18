@@ -1,27 +1,20 @@
 import React, { useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { TimelineLite } from 'gsap';
-import { ANIMATION_DURATION } from '../../constants';
+import anime from 'animejs';
+import { ANIMATION_DEFAULTS } from '../../constants';
 
-const HomeContent = ({ content }) => {
+const HomeContent = ({ content, direction }) => {
 	const elements = [];
 
 	useEffect(() => {
-		const tl = new TimelineLite();
-
-		tl.staggerFromTo(
-			elements,
-			ANIMATION_DURATION,
-			{
-				x: 100,
-				opacity: 0,
-			},
-			{
-				x: 0,
-				opacity: 1
-			},
-			0.1
-		);
+		const left = direction === 'left';
+		anime({
+			targets: elements,
+			translateX: [ left ? -100 : 100, 0 ],
+			opacity: [ 0, 1 ],
+			delay: anime.stagger(100),
+			...ANIMATION_DEFAULTS
+		});
 	}, [ content ]);
 
 	return (
@@ -53,7 +46,8 @@ const HomeContent = ({ content }) => {
 };
 
 HomeContent.propTypes = {
-	content: PropTypes.object
+	content: PropTypes.object,
+	direction: PropTypes.string
 };
 
 export default HomeContent;

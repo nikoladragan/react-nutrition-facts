@@ -18,9 +18,11 @@ const HomePage = ({ match, history }) => {
 	const { userState } = useContext(UserDataContext);
 	const [ modalVisible, toggleModal ] = useState(false);
 	const [ checkDate, setCheckDate ] = useState(false);
+	const [ direction, setDirection ] = useState('');
 
 	useEffect(() => {
 		checkHomeUrl();
+		detectDirection();
 
 		userState.id && date && getDay(date, userState.id)
 			.then(res => {
@@ -77,6 +79,18 @@ const HomePage = ({ match, history }) => {
 		};
 	};
 
+	const detectDirection = () => {
+		const prevDate = (history.test || '').replace('/home/', '');
+		const nextDate = history.location.pathname.replace('/home/', '');
+
+		const pTime = new Date(prevDate).getTime();
+		const nTime = new Date(nextDate).getTime();
+
+		setDirection(pTime > nTime ? 'left' : 'right');
+
+		history.test = history.location.pathname;
+	};
+
 	return (
 		<div className="home">
 			<ProgressBar { ...calculateCaloriesPercentage() }/>
@@ -85,7 +99,7 @@ const HomePage = ({ match, history }) => {
 			<Route
 				path={`${match.url}/:date`}
 				render={props => <DaysNavigation {...props} setDate={setDate}/>} />
-			{!isEmpty(day) && <HomeContent content={day}/>}
+			{!isEmpty(day) && <HomeContent direction={direction} content={day}/>}
 			{isEmpty(day) && <NoContent />}
 			<button className="button-action"onClick={() => toggleModal(!modalVisible)}>
 				<span className="sr-only">Add data</span>

@@ -100,4 +100,8 @@ export const NAV_DATA = [
 
 
 // Animation constants
-export const ANIMATION_DURATION = 0.2;
+export const ANIMATION_DURATION = 200;
+export const ANIMATION_DEFAULTS = {
+	duration: ANIMATION_DURATION,
+	easing: 'linear'
+};
