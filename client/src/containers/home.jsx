@@ -94,12 +94,11 @@ const HomePage = ({ match, history }) => {
 	return (
 		<div className="home">
 			<ProgressBar { ...calculateCaloriesPercentage() }/>
-			<div className="home__progress-gap"></div>
 			{!isEmpty(userState) && <h1 className="title">Hi {userState.name}!</h1>}
 			<Route
 				path={`${match.url}/:date`}
 				render={props => <DaysNavigation {...props} setDate={setDate}/>} />
-			{!isEmpty(day) && <HomeContent direction={direction} content={day}/>}
+			{!isEmpty(day) && <HomeContent direction={direction} content={day} date={date}/>}
 			{isEmpty(day) && <NoContent />}
 			<button className="button-action"onClick={() => toggleModal(!modalVisible)}>
 				<span className="sr-only">Add data</span>

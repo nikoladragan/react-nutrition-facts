@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { PropTypes } from 'prop-types';
 import anime from 'animejs';
 import { ANIMATION_DEFAULTS } from '../../constants';
+import { getMealFromDay } from '../../services/daysService';
+import { UserDataContext } from '../../context/userDataContext';
 
-const HomeContent = ({ content, direction }) => {
+const HomeContent = ({ content, direction, date }) => {
+	const { userState } = useContext(UserDataContext);
 	const elements = [];
 
 	useEffect(() => {
@@ -17,6 +20,16 @@ const HomeContent = ({ content, direction }) => {
 		});
 	}, [ content ]);
 
+	const handleMealEdit = id => {
+		getMealFromDay(userState.id, date, id)
+			.then(res => {
+				console.log(res);
+			})
+			.catch(err => {
+				console.log('err', err);
+			});
+	};
+
 	return (
 		<div className="cards">
 			{content.meals.map((m, index) => {
@@ -25,6 +38,7 @@ const HomeContent = ({ content, direction }) => {
 					ref={div => elements[index] = div}
 					className="card">
 					<h2 className="title title--small">{m.mealType}</h2>
+					<button className="card__button" onClick={() => handleMealEdit(m.id)}>edit</button>
 					<div>
 						{m.content.map(c => {
 							return <div
@@ -47,7 +61,8 @@ const HomeContent = ({ content, direction }) => {
 
 HomeContent.propTypes = {
 	content: PropTypes.object,
-	direction: PropTypes.string
+	direction: PropTypes.string,
+	date: PropTypes.number
 };
 
 export default HomeContent;

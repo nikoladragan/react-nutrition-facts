@@ -14,7 +14,6 @@ import { UserDataContext } from './context/userDataContext';
 import { getFood } from './fake';
 import WelcomePage from './containers/welcome';
 
-//test
 
 function App() {
 	const { authState, authDispatch } = useContext(AuthContext);

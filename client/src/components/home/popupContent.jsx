@@ -9,6 +9,7 @@ import { PropTypes } from 'prop-types';
 import { UserDataContext } from '../../context/userDataContext';
 import Modal from '../modal';
 import { saveDay } from '../../services/daysService';
+import MealFilter from './mealFilter';
 
 
 const HomeAddContent = ({ date, closeModal, checkDate }) => {
@@ -45,18 +46,21 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 
 	useEffect(() => {
 		if (meals.length > 0) {
-			meals.map(m => {
-				const id = m.id;
-
-				setExpandedMeals([
-					...expandedMeals,
-					getFoodById(id)
-				]);
-
-				return m;
-			});
+			const x = meals.map(m => getFoodById(m.id));
+			setExpandedMeals(x);
 		}
 	}, [ meals ]);
+
+	const handleAmountChange = (id, value) => {
+		console.log('handleAmountChange');
+
+		const updatedMeals = meals.map(m => {
+			if (id === m.id) m.amount = parseInt(value);
+			return m;
+		});
+
+		setMeals([ ...updatedMeals ]);
+	};
 
 	const saveMeals = () => {
 		if (meals.length === 0) return;
@@ -67,6 +71,8 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 			date,
 			meals
 		};
+
+		// console.log(data);
 
 		saveDay(data).then(() => {
 			closeModal();
@@ -101,25 +107,15 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 							callback={handleInputChange}
 							name={`nebitno${Math.random()}`} />
 					</div>
-					<div className="form__row">
-						{!isEmpty(food) &&
-							<div className="food-filter">
-								{food.map(f => {
-									return <div key={f.id} className="food-filter__row">
-										<button
-											className="food-filter__button"
-											onClick={() => addMealToState(f.id)}>
-											{f.name}
-										</button>
-										<span className="food-filter__label">{f.calories}</span>
-									</div>;
-								})}
-							</div>
-						}
-					</div>
-					{expandedMeals.map(m => {
-						return <div key={Math.random()}>{m.name} - {m.calories}</div>;
-					})}
+					{!isEmpty(food) &&
+						<MealFilter data={food} addMealCallback={addMealToState} />
+					}
+					{!isEmpty(expandedMeals) &&
+						<>
+							{'Picked food'}
+							<MealFilter data={expandedMeals} addAmountCallback={handleAmountChange} />
+						</>
+					}
 					{meals &&
 						<div className="form__action">
 							<button className="form__submit" onClick={saveMeals}>Add day</button>

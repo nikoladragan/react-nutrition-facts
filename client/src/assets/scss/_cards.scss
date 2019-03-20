@@ -5,6 +5,13 @@
 .card {
 	@extend %card;
 	opacity: 0;
+	position: relative;
+}
+
+.card__button {
+	position: absolute;
+	top: 5px;
+	right: 5px;
 }
 
 .card--show {
