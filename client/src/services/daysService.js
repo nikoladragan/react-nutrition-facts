@@ -23,21 +23,21 @@ export const getDay = (date, id) => new Promise((resolve, reject) => {
 				};
 			}
 
-			// console.log(daysObject[date][id]);
-
 			const x = daysObject[date][id].meals.map(d => {
 				const mealType = getMealTypeLabel(d.mealType);
 
 				d.mealType = mealType;
 
 				d.content = d.content.map(c => {
-					return expandMeal(c.id);
+					const meal = expandMeal(c.id);
+					meal.calories = parseInt(meal.calories * (c.amount / 100));
+					meal.amount = c.amount;
+					return meal;
 				});
 
 				return d;
 			});
 
-			console.log(x);
 
 			// localStorage.setItem('days', JSON.stringify(daysObject));
 			resolve(daysObject[date][id]);
