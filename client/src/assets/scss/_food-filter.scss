@@ -4,6 +4,7 @@
 .food-filter__row {
 	border-bottom: 1px solid lightgrey;
 	display: flex;
+	align-items: center;
 }
 .food-filter__button {
 	padding: 5px 0;
@@ -27,4 +28,9 @@
 	// background-color: lightcyan;
 	text-align: right;
 	padding-left: $gap;
+
+	input {
+		border: 1px solid $border;
+		width: 30px;
+	}
 }

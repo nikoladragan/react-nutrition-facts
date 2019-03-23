@@ -15,32 +15,63 @@ export const getDay = (date, id) => new Promise((resolve, reject) => {
 				// check if current id is present
 				if (!daysObject[date][id]) {
 					daysObject[date][id] = {};
+					localStorage.setItem('days', JSON.stringify(daysObject));
 				}
 			} else {
 				// create day + user id
 				daysObject[date] = {
 					[id]: {}
 				};
+
+				localStorage.setItem('days', JSON.stringify(daysObject));
 			}
 
-			const x = daysObject[date][id].meals.map(d => {
-				const mealType = getMealTypeLabel(d.mealType);
+			const day = daysObject[date][id];
+			const dayMeals = day.meals;
 
-				d.mealType = mealType;
+			if (dayMeals) {
+				const expandedData = dayMeals.map(({ ...d }) => {
+					const mealType = getMealTypeLabel(d.mealType);
 
-				d.content = d.content.map(c => {
-					const meal = expandMeal(c.id);
-					meal.calories = parseInt(meal.calories * (c.amount / 100));
-					meal.amount = c.amount;
-					return meal;
+					d.mealType = mealType;
+
+					d.calories = 0;
+					d.protein = 0;
+					d.carbs = 0;
+					d.fat = 0;
+
+					d.content = d.content.map(c => {
+						const meal = expandMeal(c.id);
+						meal.calories = parseInt(meal.calories * (c.amount / 100));
+						meal.amount = c.amount;
+
+						d.calories += meal.calories;
+						d.protein += meal.protein;
+						d.carbs += meal.carbs.total;
+						d.fat += meal.fat.total;
+
+						return meal;
+					});
+
+					return d;
 				});
 
-				return d;
-			});
+				day.meals = expandedData;
+				day.calories = 0;
+				day.protein = 0;
+				day.carbs = 0;
+				day.fat = 0;
 
+				day.meals.forEach(m => {
+					day.calories += m.calories;
+					day.protein += m.protein;
+					day.carbs += m.carbs;
+					day.fat += m.fat;
+				});
+			}
 
 			// localStorage.setItem('days', JSON.stringify(daysObject));
-			resolve(daysObject[date][id]);
+			resolve(day);
 		} else {
 			// nothing is present, create object with day + id
 			const dayObject = {
@@ -60,51 +91,16 @@ export const getDay = (date, id) => new Promise((resolve, reject) => {
 export const saveDay = data => new Promise((resolve, reject) => {
 	if (!data) reject('something went wrong');
 
-	// console.log(data);
-
-	// reject('wip');
-
 	const { id, date, meals } = data;
 
 	// check if there are some data for this day;
 	const days = getLocalStorage('days');
 	const day = days[date][id];
 
-	// let totalCalories = 0;
-	// let totalCarbs = 0;
-	// let totalFats = 0;
-	// let totalProtein = 0;
-
-	// const expandedMeals = data.meals.map(m => {
-	// 	const meal = getFoodById(m.id);
-
-	// 	m.amount = 100;
-
-	// 	meal.amount = m.amount;
-
-	// 	totalCalories += meal.calories * m.amount / 100;
-	// 	totalCarbs += meal.carbs.total * m.amount / 100;
-	// 	totalFats += meal.fat.total * m.amount / 100;
-	// 	totalProtein += meal.protein * m.amount / 100;
-
-	// 	return meal;
-	// });
-
 	let finalData = {};
 
-	// const mealTypeLabel = getMealTypeLabel(data.mealType);
-
 	if (!isEmpty(day)) {
-		// totalCalories += day.calories;
-		// totalCarbs += day.carbs;
-		// totalFats += day.fat;
-		// totalProtein += day.protein;
-
 		finalData = {
-			// calories: totalCalories,
-			// carbs: totalCarbs,
-			// fat: totalFats,
-			// protein: totalProtein,
 			meals: day.meals
 		};
 
@@ -116,10 +112,6 @@ export const saveDay = data => new Promise((resolve, reject) => {
 
 	} else {
 		finalData = {
-			// calories: totalCalories,
-			// carbs: totalCarbs,
-			// fat: totalFats,
-			// protein: totalProtein,
 			meals: [
 				{
 					id: generateId(),
@@ -132,10 +124,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 
 	days[date][id] = finalData;
 
-	// console.log(days);
-
 	localStorage.setItem('days', JSON.stringify(days));
-
 	resolve('done!');
 });
 

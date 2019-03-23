@@ -72,8 +72,6 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 			meals
 		};
 
-		// console.log(data);
-
 		saveDay(data).then(() => {
 			closeModal();
 			checkDate(true);

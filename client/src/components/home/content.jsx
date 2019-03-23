@@ -10,10 +10,13 @@ const HomeContent = ({ content, direction, date }) => {
 	const elements = [];
 
 	useEffect(() => {
-		const left = direction === 'left';
+		const x = direction === 'left' ? [ -100, 0 ] : direction ==='right' ? [ 100, 0 ] : [ 0, 0 ];
+		const y = direction === 'bottom' ? [ 100, 0 ] : [ 0, 0 ];
+
 		anime({
 			targets: elements,
-			translateX: [ left ? -100 : 100, 0 ],
+			translateX: x,
+			translateY: y,
 			opacity: [ 0, 1 ],
 			delay: anime.stagger(100),
 			...ANIMATION_DEFAULTS
@@ -37,7 +40,7 @@ const HomeContent = ({ content, direction, date }) => {
 					key={m.id}
 					ref={div => elements[index] = div}
 					className="card">
-					<h2 className="title title--small">{m.mealType}</h2>
+					<h2 className="title title--small">{m.mealType} - {m.calories}kcal</h2>
 					<button className="card__button" onClick={() => handleMealEdit(m.id)}>edit</button>
 					<div>
 						{m.content.map(c => {

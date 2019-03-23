@@ -86,14 +86,23 @@ const HomePage = ({ match, history }) => {
 		const pTime = new Date(prevDate).getTime();
 		const nTime = new Date(nextDate).getTime();
 
-		setDirection(pTime > nTime ? 'left' : 'right');
+		setDirection(pTime > nTime ? 'left' : nTime > pTime ? 'right' : 'bottom');
 
 		history.test = history.location.pathname;
 	};
 
+	const handleCloseModal = () => {
+		history.test = history.location.pathname;
+		getDay(date, userState.id)
+			.then(res => {
+				toggleModal(false);
+				setDay(res);
+			});
+	};
+
 	return (
 		<div className="home">
-			<ProgressBar { ...calculateCaloriesPercentage() }/>
+			{!isEmpty(userState) && <ProgressBar { ...calculateCaloriesPercentage() }/>}
 			{!isEmpty(userState) && <h1 className="title">Hi {userState.name}!</h1>}
 			<Route
 				path={`${match.url}/:date`}
@@ -104,7 +113,7 @@ const HomePage = ({ match, history }) => {
 				<span className="sr-only">Add data</span>
 				<IconAdd />
 			</button>
-			{modalVisible && <HomeAddContent checkDate={setCheckDate} date={date} closeModal={() => toggleModal(false)}/>}
+			{modalVisible && <HomeAddContent checkDate={setCheckDate} date={date} closeModal={handleCloseModal}/>}
 		</div>
 	);
 };
