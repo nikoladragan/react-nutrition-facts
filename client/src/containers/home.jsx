@@ -61,15 +61,19 @@ const HomePage = ({ match, history }) => {
 			bar: 0
 		};
 
-		const neededCalories = userState.calories;
 		const { calories, carbs, fat, protein } = day;
 
 		const sum = carbs + fat + protein;
 
-		const bar = calories * 100 / neededCalories;
+		const bar = calories * 100 / day.maxCalories;
 		const p = protein * 100 / sum;
 		const c = carbs * 100 / sum;
 		const f = fat * 100 / sum;
+
+		if (bar > 100) return {
+			bar: 100,
+			overMaximum: true
+		};
 
 		return {
 			p: p,

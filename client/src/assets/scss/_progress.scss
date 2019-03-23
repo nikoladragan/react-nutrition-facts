@@ -55,10 +55,12 @@
 }
 .progress__part--green {
 	background-color: lightgreen;
-
 }
 .progress__part--orange {
 	background-color: orange;
+}
+.progress__part--red {
+	background-color: #c73d3d;
 }
 
 @keyframes animation {

@@ -1,8 +1,9 @@
-import { getFoodById } from './foodService';
+// import { getFoodById } from './foodService';
 import { getLocalStorage, isEmpty, generateId } from '../helpers/helpers';
 
 export const getDay = (date, id) => new Promise((resolve, reject) => {
 	const days = localStorage.getItem('days');
+	const user = getUser(id);
 
 	// did user provide day?
 	if (date) {
@@ -20,7 +21,9 @@ export const getDay = (date, id) => new Promise((resolve, reject) => {
 			} else {
 				// create day + user id
 				daysObject[date] = {
-					[id]: {}
+					[id]: {
+						maxCalories: user.calories,
+					}
 				};
 
 				localStorage.setItem('days', JSON.stringify(daysObject));
@@ -68,6 +71,8 @@ export const getDay = (date, id) => new Promise((resolve, reject) => {
 					day.carbs += m.carbs;
 					day.fat += m.fat;
 				});
+
+				day.maxCalories = user.calories;
 			}
 
 			// localStorage.setItem('days', JSON.stringify(daysObject));
@@ -76,7 +81,9 @@ export const getDay = (date, id) => new Promise((resolve, reject) => {
 			// nothing is present, create object with day + id
 			const dayObject = {
 				[date]: {
-					[id]: {}
+					[id]: {
+						maxCalories: user.calories
+					}
 				}
 			};
 
@@ -156,4 +163,9 @@ const getMealTypeLabel = (number) => {
 		default:
 			return null;
 	}
+};
+
+const getUser = id => {
+	const users = getLocalStorage('users');
+	return users.filter(u => u._id === id)[0].data;
 };
