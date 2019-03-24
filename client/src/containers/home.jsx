@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { Route } from 'react-router-dom';
 import { getTodayDate, isEmpty } from '../helpers/helpers';
 import { getDay } from '../services/daysService';
@@ -11,47 +11,26 @@ import HomeAddContent from '../components/home/popupContent';
 import NoContent from '../components/home/noContent';
 
 import { ReactComponent as IconAdd } from '../assets/icons/add.svg';
+import Warning from '../components/shared/warning';
+import Heading from '../components/layout/heading';
 
 const HomePage = ({ match, history }) => {
-	const [ day, setDay ] = useState(null);
+	const [ day, setDay ] = useState({});
 	const [ date, setDate ] = useState('');
 	const { userState } = useContext(UserDataContext);
 	const [ modalVisible, toggleModal ] = useState(false);
 	const [ checkDate, setCheckDate ] = useState(false);
 	const [ direction, setDirection ] = useState('');
 
-	useEffect(() => {
-		checkHomeUrl();
-		detectDirection();
+	let tooMuchCalories = false;
 
-		userState.id && date && getDay(date, userState.id)
-			.then(res => {
-				setDay(res);
-			})
-			.catch(err => {
-				console.log('err', err);
-				setDay(null);
-			});
-	}, [ date, userState ]);
-
-	useEffect(() => {
-		checkDate && getDay(date, userState.id)
-			.then(res => {
-				setDay(res);
-			})
-			.catch(err => {
-				console.log('err', err);
-				setDay(null);
-			});
-	}, [ checkDate ]);
-
-	const checkHomeUrl = () => {
+	const checkHomeUrl = useCallback(() => {
 		const firstCondition = match.path === history.location.pathname;
 		const secondCondition = match.path + '/' === history.location.pathname;
 		const condition = firstCondition || secondCondition;
 
 		condition && history.push(`/home/${getTodayDate()}`);
-	};
+	}, [ history, match.path ]);
 
 	const calculateCaloriesPercentage = () => {
 		if (isEmpty(day) || !userState) return {
@@ -70,10 +49,13 @@ const HomePage = ({ match, history }) => {
 		const c = carbs * 100 / sum;
 		const f = fat * 100 / sum;
 
-		if (bar > 100) return {
-			bar: 100,
-			overMaximum: true
-		};
+		if (bar > 100) {
+			tooMuchCalories = true;
+			return {
+				bar: 100,
+				overMaximum: true
+			};
+		}
 
 		return {
 			p: p,
@@ -83,7 +65,7 @@ const HomePage = ({ match, history }) => {
 		};
 	};
 
-	const detectDirection = () => {
+	const detectDirection = useCallback(() => {
 		const prevDate = (history.test || '').replace('/home/', '');
 		const nextDate = history.location.pathname.replace('/home/', '');
 
@@ -93,7 +75,7 @@ const HomePage = ({ match, history }) => {
 		setDirection(pTime > nTime ? 'left' : nTime > pTime ? 'right' : 'bottom');
 
 		history.test = history.location.pathname;
-	};
+	}, [ history ]);
 
 	const handleCloseModal = () => {
 		history.test = history.location.pathname;
@@ -104,15 +86,43 @@ const HomePage = ({ match, history }) => {
 			});
 	};
 
+	useEffect(() => {
+		userState.id && date && getDay(date, userState.id)
+			.then(res => {
+				setDay(res);
+			})
+			.catch(err => {
+				console.log('err', err);
+				setDay(null);
+			});
+	}, [ date, userState ]);
+
+	useEffect(() => {
+		checkHomeUrl();
+		detectDirection();
+	}, [ checkHomeUrl, detectDirection ]);
+
+	useEffect(() => {
+		checkDate && getDay(date, userState.id)
+			.then(res => {
+				setDay(res);
+			})
+			.catch(err => {
+				console.log('err', err);
+				setDay(null);
+			});
+	}, [ checkDate, date, userState.id ]);
+
 	return (
 		<div className="home">
-			{!isEmpty(userState) && <ProgressBar { ...calculateCaloriesPercentage() }/>}
-			{!isEmpty(userState) && <h1 className="title">Hi {userState.name}!</h1>}
+			<ProgressBar { ...calculateCaloriesPercentage() } show={!!day.meals}/>
+			{!isEmpty(userState) && <Heading level={1} modifiers="small">Hi {userState.name}!</Heading>}
 			<Route
 				path={`${match.url}/:date`}
 				render={props => <DaysNavigation {...props} setDate={setDate}/>} />
-			{!isEmpty(day) && <HomeContent direction={direction} content={day} date={date}/>}
-			{isEmpty(day) && <NoContent />}
+			{tooMuchCalories && <Warning>Ups!</Warning>}
+			{day.meals && <HomeContent direction={direction} content={day} date={date}/>}
+			{!day.meals && <NoContent />}
 			<button className="button-action"onClick={() => toggleModal(!modalVisible)}>
 				<span className="sr-only">Add data</span>
 				<IconAdd />

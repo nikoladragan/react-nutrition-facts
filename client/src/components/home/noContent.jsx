@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import anime from 'animejs';
 import { ANIMATION_DEFAULTS } from '../../constants';
+import Heading from '../layout/heading';
 
 const NoContent = () => {
 	let elements = null;
@@ -13,13 +14,13 @@ const NoContent = () => {
 			delay: anime.stagger(100),
 			...ANIMATION_DEFAULTS
 		});
-	}, []);
+	}, [ elements ]);
 
 	return (
 		<div
 			ref={div => elements = div}
 			className="card">
-			<h2 className="title title--small">No information added today.</h2>
+			<Heading modifiers="small">No information added today.</Heading>
 		</div>
 	);
 };

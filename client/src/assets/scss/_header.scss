@@ -1,7 +1,13 @@
+.header--active {
+	.nav__list {
+		transform: translate(0, 0);
+	}
+	+ .main {
+		filter: blur(10px);
+	}
+}
+
 .nav {
-	// background-color: $white;
-	height: 50px;
-	// box-shadow: $box-shadow;
 	padding: $gap;
 	text-align: right;
 	position: fixed;
@@ -16,19 +22,34 @@
 	box-shadow: $box-shadow;
 	text-align: left;
 	position: absolute;
-	left: 0;
-	width: 100%;
-	top: 100%;
-	padding: $gap;
+	right: 0;
+	width: 80vw;
+	height: 100vh;
+	top: 0;
+	padding: 50px $gap $gap;
 	z-index: 1;
-	transform: skewX(45deg) translate(100%, 0);
-	transform-origin: top left;
-	transition: $duration ease-in-out;
+	transform: translate(105%, 0);
+	transition: $duration $easing;
 	transition-property: transform;
 }
 
 .nav__list--active {
 	transform: skewX(0) translate(0, 0);
+}
+
+.nav__indicator {
+	position: fixed;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+
+	border-right: 5px solid black;
 }
 
 .nav__link {
@@ -56,6 +77,7 @@
 	padding: 0;
 	position: relative;
 	outline: none;
+	z-index: 2;
 }
 
 .nav__toggle--active {

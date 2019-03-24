@@ -7,12 +7,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { UserDataProvider } from './context/userDataContext';
 import { AuthProvider } from './context/authContext';
+import { MenuProvider } from './context/menuContext';
 
 const app =
 	<BrowserRouter>
 		<AuthProvider>
 			<UserDataProvider>
-				<App></App>
+				<MenuProvider>
+					<App></App>
+				</MenuProvider>
 			</UserDataProvider>
 		</AuthProvider>
 	</BrowserRouter>

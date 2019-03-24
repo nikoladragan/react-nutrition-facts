@@ -4,7 +4,7 @@ const UserDataContext = createContext();
 
 const initialState = {};
 
-const reducer = (state, action) => {
+const reducerX = (state, action) => {
 	switch (action.type) {
 		case 'setInitialData':
 			return {
@@ -17,7 +17,7 @@ const reducer = (state, action) => {
 };
 
 const UserDataProvider = props => {
-	const [ userState, userDispatch ] = useReducer(reducer, initialState);
+	const [ userState, userDispatch ] = useReducer(reducerX, initialState);
 	const value = { userState, userDispatch };
 
 	return (

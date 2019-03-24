@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { register } from '../services/userService';
 import { withRouter } from 'react-router-dom';
+import Heading from '../components/layout/heading';
 
 const RegisterPage = (props) => {
 	const [ username, setUsername ] = useState('');
@@ -20,7 +21,7 @@ const RegisterPage = (props) => {
 
 	return (
 		<div>
-			<h1 className="title">Register</h1>
+			<Heading level={1}>Register</Heading>
 			<form className="form">
 				<div className="form__row">
 					<input

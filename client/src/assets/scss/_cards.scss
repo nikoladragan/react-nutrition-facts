@@ -8,15 +8,32 @@
 	position: relative;
 }
 
+.card--show {
+	opacity: 1;
+}
+
+.card--warning {
+	background-color: orange;
+	border: 1px solid orangered;
+	display: flex;
+	align-items: center;
+	.title {
+		margin-bottom: 0;
+	}
+}
+
+.card__icon {
+	width: 30px;
+	height: 30px;
+	margin-left: auto;
+}
+
 .card__button {
 	position: absolute;
 	top: 5px;
 	right: 5px;
 }
 
-.card--show {
-	opacity: 1;
-}
 
 .card__top {
 	display: flex;

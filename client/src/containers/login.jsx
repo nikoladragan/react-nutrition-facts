@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { login } from '../services/userService';
 import { AuthContext } from '../context/authContext';
 import { UserDataContext } from '../context/userDataContext';
+import Heading from '../components/layout/heading';
 
 const LoginPage = () => {
 	const { authDispatch } = useContext(AuthContext);
@@ -36,7 +37,7 @@ const LoginPage = () => {
 
 	return (
 		<div>
-			<h1 className="title">Login</h1>
+			<Heading level={1}>Login</Heading>
 			<form className="form">
 				<div className="form__row">
 					<input

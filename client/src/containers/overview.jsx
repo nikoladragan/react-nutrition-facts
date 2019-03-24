@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Heading from '../components/layout/heading';
 
 const OverviewPage = () => {
 	const [ data, setData ] = useState(false);
@@ -10,7 +11,7 @@ const OverviewPage = () => {
 	}, []);
 	return (
 		<div>
-			<h1 className="title">Overview</h1>
+			<Heading level={1}>Overview</Heading>
 			{data && <ul>
 				{data.map((d, index) => {
 					return <li key={d.id}>{index + 1}) {d.name} - {d.calories}kcal</li>;

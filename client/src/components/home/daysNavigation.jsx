@@ -31,7 +31,7 @@ const DaysNavigation = ({ match, history, setDate }) => {
 
 	dateTime > today && history.push(getTodayDate());
 
-	useEffect(() => setDate(dateTime), [ match.params.date ]);
+	useEffect(() => setDate(dateTime), [ dateTime, match.params.date, setDate ]);
 
 	return (
 		<div className="navigation">

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ProgressBar = ({ p, c, f, bar, overMaximum }) => {
+const ProgressBar = ({ p, c, f, bar, overMaximum, show }) => {
+	if (!show) return false;
+
 	const percentage = (x) => {
 		return { width: `${x}%` };
 	};
@@ -27,7 +29,8 @@ ProgressBar.propTypes = {
 	c: PropTypes.number,
 	f: PropTypes.number,
 	bar: PropTypes.number,
-	overMaximum: PropTypes.bool
+	overMaximum: PropTypes.bool,
+	show: PropTypes.bool
 };
 
 export default ProgressBar;

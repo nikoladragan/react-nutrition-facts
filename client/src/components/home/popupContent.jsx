@@ -88,7 +88,7 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 	return (
 		<Modal closeModal={handleCloseModal}>
 			<div>
-				<Heading level={2} className={'title title--small'}>Add meals</Heading>
+				<Heading level={2} modifier={'small'}>Add meals</Heading>
 				<div className="form">
 					<div className="form__row">
 						<Select

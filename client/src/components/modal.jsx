@@ -23,7 +23,7 @@ const Modal = ({ children, closeModal }) => {
 			opacity: [ 0, 1 ],
 			...ANIMATION_DEFAULTS,
 		});
-	}, []);
+	}, [ modal, modalContainer ]);
 
 	const closeModalHandler = () => {
 		anime({

@@ -4,6 +4,7 @@ import anime from 'animejs';
 import { ANIMATION_DEFAULTS } from '../../constants';
 import { getMealFromDay } from '../../services/daysService';
 import { UserDataContext } from '../../context/userDataContext';
+import Heading from '../layout/heading';
 
 const HomeContent = ({ content, direction, date }) => {
 	const { userState } = useContext(UserDataContext);
@@ -21,7 +22,7 @@ const HomeContent = ({ content, direction, date }) => {
 			delay: anime.stagger(100),
 			...ANIMATION_DEFAULTS
 		});
-	}, [ content ]);
+	}, [ content, direction, elements ]);
 
 	const handleMealEdit = id => {
 		getMealFromDay(userState.id, date, id)
@@ -40,7 +41,7 @@ const HomeContent = ({ content, direction, date }) => {
 					key={m.id}
 					ref={div => elements[index] = div}
 					className="card">
-					<h2 className="title title--small">{m.mealType} - {m.calories}kcal</h2>
+					<Heading modifiers="small">{m.mealType} - {m.calories}kcal</Heading>
 					<button className="card__button" onClick={() => handleMealEdit(m.id)}>edit</button>
 					<div>
 						{m.content.map(c => {

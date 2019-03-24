@@ -10,7 +10,6 @@ body {
 	width: 100%;
 	overflow-y: auto;
 	overflow-x: hidden;
-	padding-top: 50px;
 
 	background-image:
 	radial-gradient(ellipse at top left, #D7FF67 0%, transparent),
@@ -22,8 +21,12 @@ body {
 
 .main {
 	flex: 1;
-	padding: $gap;
+	padding: $gap * 2 $gap;
 	position: relative;
+	transition: $duration $easing;
+	transition-property: transform, filter;
+	will-change: filter;
+	// min-height: 50vh;
 }
 
 .title {

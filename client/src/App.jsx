@@ -44,13 +44,11 @@ function App() {
 		}
 
 		getFood();
-	}, []);
+	}, [ authDispatch, userDispatch ]);
 
 	return (
 		<div className="root" style={css}>
-			<header className="header">
-				<Navigation />
-			</header>
+			<Navigation />
 			<main className="main">
 				<Switch>
 					<Route path="/" exact component={WelcomePage}></Route>

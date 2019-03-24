@@ -135,7 +135,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 	resolve('done!');
 });
 
-export const getMealFromDay = (userId, dayId, mealId) => new Promise((resolve, reject) => {
+export const getMealFromDay = (userId, dayId, mealId) => new Promise((resolve) => {
 	const days = getLocalStorage('days');
 	const meals = days[dayId][userId].meals;
 	const meal = meals.filter(m => m.id === mealId);
