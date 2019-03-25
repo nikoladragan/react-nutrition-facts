@@ -106,7 +106,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 
 	let finalData = {};
 
-	if (!isEmpty(day)) {
+	if (day.meals) {
 		finalData = {
 			meals: day.meals
 		};
