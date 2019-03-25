@@ -30,7 +30,12 @@
 		"array-bracket-spacing": [2, "always"],
 		"jsx-quotes": [2, "prefer-double"],
 		"react-hooks/rules-of-hooks": "error",
-		"react-hooks/exhaustive-deps": "warn"
+		"react-hooks/exhaustive-deps": "warn",
+		"quote-props": [ "error", "as-needed" ],
+		"key-spacing": [ "error", {
+			"afterColon": true,
+			"beforeColon": false
+		}]
 	},
 	"extends": [
 		"eslint:recommended",
