@@ -1,5 +1,5 @@
 // import { getFoodById } from './foodService';
-import { getLocalStorage, isEmpty, generateId } from '../helpers/helpers';
+import { getLocalStorage, generateId } from '../helpers/helpers';
 
 export const getDay = (date, id) => new Promise((resolve, reject) => {
 	const days = localStorage.getItem('days');
