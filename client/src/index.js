@@ -8,16 +8,16 @@ import * as serviceWorker from './serviceWorker';
 import { UserDataProvider } from './context/userDataContext';
 import { AuthProvider } from './context/authContext';
 import { MenuProvider } from './context/menuContext';
-import { ErrorProvider } from './context/errorContext';
+import { NotificationProvider } from './context/notificationContext';
 
 const app =
 	<BrowserRouter>
 		<AuthProvider>
 			<UserDataProvider>
 				<MenuProvider>
-					<ErrorProvider>
+					<NotificationProvider>
 						<App></App>
-					</ErrorProvider>
+					</NotificationProvider>
 				</MenuProvider>
 			</UserDataProvider>
 		</AuthProvider>

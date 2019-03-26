@@ -1,15 +1,15 @@
 import React, { useReducer, createContext } from 'react';
 
-const ErrorContext = createContext();
+const NotificationContext = createContext();
 
 const initialState = [];
 
 const reducer = (state, action) => {
 	let array = null;
 	switch (action.type) {
-		case 'addNewError':
+		case 'addNewNotification':
 			return [ ...state, action.data ];
-		case 'removeError':
+		case 'removeNotification':
 			array = state.filter(s => s.id !== action.data);
 			return array;
 		case 'activateTimer':
@@ -25,21 +25,21 @@ const reducer = (state, action) => {
 	}
 };
 
-const ErrorProvider = props => {
+const NotificationProvider = props => {
 	const [ state, dispatch ] = useReducer(reducer, initialState);
 	const value = { state, dispatch };
 
 	return (
-		<ErrorContext.Provider value={value}>
+		<NotificationContext.Provider value={value}>
 			{props.children}
-		</ErrorContext.Provider>
+		</NotificationContext.Provider>
 	);
 };
 
-const ErrorConsumer = ErrorContext.Consumer;
+const NotificationConsumer = NotificationContext.Consumer;
 
 export {
-	ErrorContext,
-	ErrorProvider,
-	ErrorConsumer
+	NotificationContext,
+	NotificationProvider,
+	NotificationConsumer
 };

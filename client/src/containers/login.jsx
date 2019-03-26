@@ -3,7 +3,7 @@ import { login } from '../services/userService';
 import { AuthContext } from '../context/authContext';
 import { UserDataContext } from '../context/userDataContext';
 import Heading from '../components/layout/heading';
-import { ErrorContext } from '../context/errorContext';
+import { NotificationContext } from '../context/notificationContext';
 import { generateId } from '../helpers/helpers';
 
 const LoginPage = () => {
@@ -11,7 +11,7 @@ const LoginPage = () => {
 	const { userDispatch } = useContext(UserDataContext);
 	const [ username, setUsername ] = useState('');
 	const [ password, setPassword ] = useState('');
-	const { dispatch: errorDispatch } = useContext(ErrorContext);
+	const { dispatch: notificationDispatch } = useContext(NotificationContext);
 
 	const submit = () => {
 		const form = { username, password };
@@ -36,8 +36,8 @@ const LoginPage = () => {
 			.catch(err => {
 				console.log(err);
 
-				errorDispatch({
-					type: 'addNewError',
+				notificationDispatch({
+					type: 'addNewNotification',
 					data: {
 						name: 'bad info',
 						id: generateId()
