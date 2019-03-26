@@ -9,20 +9,7 @@ const NotificationField = ({ name, id }) => {
 	const notification = useRef();
 
 	useEffect(() => {
-		setTimeout(() => {
-			anime({
-				targets: notification.current,
-				translateX: [ 0, -100 ],
-				opacity: [ 1, 0 ],
-				...ANIMATION_DEFAULTS,
-				complete: () => {
-					notificationDispatch({
-						type: 'removeNotification',
-						data: id
-					});
-				}
-			});
-		}, 2000);
+		setTimeout(closeNotification, 2000);
 
 		anime({
 			targets: notification.current,
@@ -31,12 +18,30 @@ const NotificationField = ({ name, id }) => {
 			opacity: [ 0, 1 ],
 			...ANIMATION_DEFAULTS,
 		});
-	}, [ notification, notificationDispatch, id, name ]);
+	}, [ notification, notificationDispatch, id, name, closeNotification ]);
 
+	const closeNotification = useCallback(() => {
+		notification.current &&
+		anime({
+			targets: notification.current,
+			translateX: [ 0, -100 ],
+			height: [ notification.current.scrollHeight, 0 ],
+			opacity: [ 1, 0 ],
+			...ANIMATION_DEFAULTS,
+			complete: () => {
+				notificationDispatch({
+					type: 'removeNotification',
+					data: id
+				});
+			}
+		});
+	}, [ id, notificationDispatch ]);
 
 	return (
 		<div style={{ opacity: 0 }}ref={div => notification.current = div}>
-			<div className="card card--show card--warning">{name}</div>
+			<div
+				onClick={closeNotification}
+				className="card card--show card--warning">{name}</div>
 		</div>
 	);
 };

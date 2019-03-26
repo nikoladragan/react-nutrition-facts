@@ -2,11 +2,11 @@
 export const GENDER_DATA = [
 	{
 		text: 'Male',
-		value:'male'
+		value: 'male'
 	},
 	{
 		text: 'Female',
-		value:'female'
+		value: 'female'
 	}
 ];
 export const ACTIVITY_DATA = [
