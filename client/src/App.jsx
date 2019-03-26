@@ -13,6 +13,7 @@ import NoAccess from './components/noAccess';
 import { UserDataContext } from './context/userDataContext';
 import { getFood } from './fake';
 import WelcomePage from './containers/welcome';
+import ErrorComponent from './components/error';
 
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
 						render={() => isAuth ? <Redirect to="/" /> : <RegisterPage />}></Route>
 				</Switch>
 			</main>
+			<ErrorComponent />
 		</div>
 	);
 }

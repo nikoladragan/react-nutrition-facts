@@ -3,12 +3,15 @@ import { login } from '../services/userService';
 import { AuthContext } from '../context/authContext';
 import { UserDataContext } from '../context/userDataContext';
 import Heading from '../components/layout/heading';
+import { ErrorContext } from '../context/errorContext';
+import { generateId } from '../helpers/helpers';
 
 const LoginPage = () => {
 	const { authDispatch } = useContext(AuthContext);
 	const { userDispatch } = useContext(UserDataContext);
 	const [ username, setUsername ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const { dispatch: errorDispatch } = useContext(ErrorContext);
 
 	const submit = () => {
 		const form = { username, password };
@@ -32,6 +35,14 @@ const LoginPage = () => {
 			)
 			.catch(err => {
 				console.log(err);
+
+				errorDispatch({
+					type: 'addNewError',
+					data: {
+						name: 'bad info',
+						id: generateId()
+					}
+				});
 			});
 	};
 
