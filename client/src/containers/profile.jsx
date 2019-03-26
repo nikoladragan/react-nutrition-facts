@@ -4,9 +4,11 @@ import { UserDataContext } from '../context/userDataContext';
 import Select from '../components/select';
 import { updateUserData } from '../services/userService';
 import { GOAL_DATA, ACTIVITY_DATA, GENDER_DATA } from '../constants';
+import { NotificationContext } from '../context/notificationContext';
 
 const ProfilePage = () => {
 	const { userState, userDispatch } = useContext(UserDataContext);
+	const { dispatch: notificationDispatch } = useContext(NotificationContext);
 
 	const [ name, setName ] = useState();
 
@@ -78,6 +80,13 @@ const ProfilePage = () => {
 
 		updateUserData(data)
 			.then(res => {
+				notificationDispatch({
+					type: 'addNewNotification',
+					data: {
+						name: 'Profile saved'
+					}
+				});
+
 				userDispatch({
 					type: 'setInitialData',
 					data: res

@@ -13,17 +13,6 @@ const Navigation = ({ history }) => {
 	const canMove = useRef(false);
 	const clientX = useRef(0);
 
-	const root = document.querySelector('.root');
-
-
-	useEffect(() => {
-		if (root) {
-			root.addEventListener('touchstart', e => handleTouchStart(e));
-			root.addEventListener('touchmove', e => handleTouchMove(e));
-			root.addEventListener('touchend', e => handleTouchEnd(e));
-		}
-	}, [ handleTouchEnd, handleTouchMove, handleTouchStart, root ]);
-
 	const handleTouchStart = useCallback(e => {
 		canMove.current = true;
 		clientX.current = e.touches[0].pageX;
@@ -45,6 +34,16 @@ const Navigation = ({ history }) => {
 		canMove.current = false;
 		clientX.current = 0;
 	}, []);
+
+	useEffect(() => {
+		const root = document.querySelector('.root');
+
+		if (root) {
+			root.addEventListener('touchstart', e => handleTouchStart(e));
+			root.addEventListener('touchmove', e => handleTouchMove(e));
+			root.addEventListener('touchend', e => handleTouchEnd(e));
+		}
+	}, [ handleTouchEnd, handleTouchMove, handleTouchStart ]);
 
 	useEffect(() => {
 		setMenuState(menuStateContext);

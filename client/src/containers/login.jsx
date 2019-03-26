@@ -4,7 +4,6 @@ import { AuthContext } from '../context/authContext';
 import { UserDataContext } from '../context/userDataContext';
 import Heading from '../components/layout/heading';
 import { NotificationContext } from '../context/notificationContext';
-import { generateId } from '../helpers/helpers';
 
 const LoginPage = () => {
 	const { authDispatch } = useContext(AuthContext);
@@ -40,7 +39,6 @@ const LoginPage = () => {
 					type: 'addNewNotification',
 					data: {
 						name: 'bad info',
-						id: generateId()
 					}
 				});
 			});
