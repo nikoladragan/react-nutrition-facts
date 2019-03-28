@@ -17,8 +17,8 @@ import NotificationComponent from './components/notification';
 
 
 function App() {
-	const { authState, authDispatch } = useContext(AuthContext);
-	const { userDispatch } = useContext(UserDataContext);
+	const { state: authState, dispatch: authDispatch } = useContext(AuthContext);
+	const { dispatch: userDispatch } = useContext(UserDataContext);
 	const isAuth = authState.isAuthenticated;
 	const css = {
 		height: `${window.innerHeight}px`
@@ -52,7 +52,10 @@ function App() {
 			<Navigation />
 			<main className="main">
 				<Switch>
-					<Route path="/" exact component={WelcomePage}></Route>
+					<Route
+						path="/"
+						exact
+						render={() => isAuth ? <Redirect to="/home" /> : <WelcomePage />}></Route>
 					<Route path="/home" component={isAuth ? HomePage : NoAccess}></Route>
 					<Route exact path="/profile" component={isAuth ? ProfilePage : NoAccess}></Route>
 					<Route exact path="/overview" component={isAuth ? OverviewPage : NoAccess}></Route>
@@ -60,11 +63,11 @@ function App() {
 					<Route
 						exact
 						path="/login"
-						render={() => isAuth ? <Redirect to="/" /> : <LoginPage />}></Route>
+						render={() => isAuth ? <Redirect to="/home" /> : <LoginPage />}></Route>
 					<Route
 						exact
 						path="/register"
-						render={() => isAuth ? <Redirect to="/" /> : <RegisterPage />}></Route>
+						render={() => isAuth ? <Redirect to="/home" /> : <RegisterPage />}></Route>
 				</Switch>
 			</main>
 			<NotificationComponent />

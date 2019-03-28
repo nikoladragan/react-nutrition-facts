@@ -60,3 +60,5 @@ export const isEmpty = a => {
 
 	return true;
 };
+
+export const cleanArray = a => a.filter(el => el != null); // eslint-disable-line

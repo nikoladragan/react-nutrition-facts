@@ -38,7 +38,7 @@ export const login = data => new Promise((resolve, reject) => {
 
 		resolve(data);
 	} else {
-		reject('bad info');
+		reject('Username or password are not correct');
 	}
 });
 

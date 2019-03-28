@@ -6,8 +6,8 @@ import Heading from '../components/layout/heading';
 import { NotificationContext } from '../context/notificationContext';
 
 const LoginPage = () => {
-	const { authDispatch } = useContext(AuthContext);
-	const { userDispatch } = useContext(UserDataContext);
+	const { dispatch: authDispatch } = useContext(AuthContext);
+	const { dispatch: userDispatch } = useContext(UserDataContext);
 	const [ username, setUsername ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const { dispatch: notificationDispatch } = useContext(NotificationContext);
@@ -33,12 +33,11 @@ const LoginPage = () => {
 				}
 			)
 			.catch(err => {
-				console.log(err);
-
 				notificationDispatch({
 					type: 'addNewNotification',
 					data: {
-						name: 'bad info',
+						name: err,
+						type: 'bad'
 					}
 				});
 			});

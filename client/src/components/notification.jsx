@@ -13,7 +13,7 @@ const NotificationComponent = () => {
 	return (
 		<div className="notifications">
 			{notifications && notifications.map(e => {
-				return <NotificationField key={e.id} id={e.id} name={e.name}/>;
+				return <NotificationField key={e.id} {...e}/>;
 			})}
 		</div>
 	);

@@ -1,21 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { register } from '../services/userService';
 import { withRouter } from 'react-router-dom';
 import Heading from '../components/layout/heading';
+import { NotificationContext } from '../context/notificationContext';
 
 const RegisterPage = (props) => {
 	const [ username, setUsername ] = useState('');
 	const [ password, setPassword ] = useState('');
+	const { dispatch: notificationDispatch } = useContext(NotificationContext);
+
 
 	const submit = () => {
 		const form = { username, password };
 
 		register(form)
-			.then(() => {
+			.then(response => {
+				notificationDispatch({
+					type: 'addNewNotification',
+					data: {
+						name: response,
+						type: 'good'
+					}
+				});
 				props.history.push('/login');
 			})
 			.catch(res => {
-				console.log(res);
+				notificationDispatch({
+					type: 'addNewNotification',
+					data: {
+						name: res,
+						type: 'bad'
+					}
+				});
 			});
 	};
 

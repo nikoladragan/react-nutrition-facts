@@ -1,22 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Heading from '../components/layout/heading';
+import { UserDataContext } from '../context/userDataContext';
+import { getFilledDays } from '../services/daysService';
+import { isEmpty } from '../helpers/helpers';
 
 const OverviewPage = () => {
-	const [ data, setData ] = useState(false);
+	const { state: userState } = useContext(UserDataContext);
+	const [ data, setData ] = useState([]);
 
 	useEffect(() => {
-		const ls = JSON.parse(localStorage.getItem('food'));
+		!isEmpty(userState) && !data.length && getFilledDays(userState.id)
+			.then(res => {
+				console.log(res);
+				setData(res);
+			})
+			.catch(err => {
+				console.log('err', err);
+			});
+	}, [ data, userState ]);
 
-		setData(ls);
-	}, []);
 	return (
 		<div>
 			<Heading level={1}>Overview</Heading>
-			{data && <ul>
-				{data.map((d, index) => {
-					return <li key={d.id}>{index + 1}) {d.name} - {d.calories}kcal</li>;
-				})}
-			</ul>}
+			{data.map(d => {
+				return <div key={d.dateId}>{d.dateId}</div>;
+			})}
 		</div>
 	);
 };

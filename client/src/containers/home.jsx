@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useState, useContext, useCallback, useRef } from 'react';
 import { Route } from 'react-router-dom';
 import { getTodayDate, isEmpty } from '../helpers/helpers';
 import { getDay } from '../services/daysService';
@@ -17,10 +17,11 @@ import Heading from '../components/layout/heading';
 const HomePage = ({ match, history }) => {
 	const [ day, setDay ] = useState({});
 	const [ date, setDate ] = useState('');
-	const { userState } = useContext(UserDataContext);
+	const { state: userState } = useContext(UserDataContext);
 	const [ modalVisible, toggleModal ] = useState(false);
 	const [ checkDate, setCheckDate ] = useState(false);
 	const [ direction, setDirection ] = useState('');
+	const prevDate = useRef('');
 
 	let tooMuchCalories = false;
 
@@ -66,16 +67,15 @@ const HomePage = ({ match, history }) => {
 	};
 
 	const detectDirection = useCallback(() => {
-		const prevDate = (history.test || '').replace('/home/', '');
 		const nextDate = history.location.pathname.replace('/home/', '');
 
-		const pTime = new Date(prevDate).getTime();
+		const pTime = new Date(prevDate.current).getTime();
 		const nTime = new Date(nextDate).getTime();
 
 		setDirection(pTime > nTime ? 'left' : nTime > pTime ? 'right' : 'bottom');
 
-		history.test = history.location.pathname;
-	}, [ history ]);
+		prevDate.current = history.location.pathname;
+	}, [ history.location.pathname ]);
 
 	const handleCloseModal = () => {
 		history.test = history.location.pathname;

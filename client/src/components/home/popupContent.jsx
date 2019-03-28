@@ -10,6 +10,7 @@ import { UserDataContext } from '../../context/userDataContext';
 import Modal from '../modal';
 import { saveDay } from '../../services/daysService';
 import MealFilter from './mealFilter';
+import { NotificationContext } from '../../context/notificationContext';
 
 
 const HomeAddContent = ({ date, closeModal, checkDate }) => {
@@ -17,8 +18,9 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 	const [ meals, setMeals ] = useState([]);
 	const [ input, setInput ] = useState('');
 	const [ mealType, setMealType ] = useState(1);
-	const { userState } = useContext(UserDataContext);
+	const { state: userState } = useContext(UserDataContext);
 	const [ expandedMeals, setExpandedMeals ] = useState([]);
+	const { dispatch: notificationDispatch } = useContext(NotificationContext);
 
 	const handleInputChange = e => {
 		const value = e.target.value;
@@ -63,7 +65,17 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 	};
 
 	const saveMeals = () => {
-		if (meals.length === 0) return;
+		if (meals.length === 0) {
+			notificationDispatch({
+				type: 'addNewNotification',
+				data: {
+					name: 'You need to add something first',
+					type: 'bad'
+				}
+			});
+
+			return;
+		}
 
 		const data = {
 			id: userState.id,
@@ -72,11 +84,24 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 			meals
 		};
 
-		saveDay(data).then(() => {
+		saveDay(data).then(res => {
 			closeModal();
 			checkDate(true);
+			notificationDispatch({
+				type: 'addNewNotification',
+				data: {
+					name: res,
+					type: 'good'
+				}
+			});
 		}).catch(err => {
-			console.log('error:', err);
+			notificationDispatch({
+				type: 'addNewNotification',
+				data: {
+					name: err,
+					type: 'bad'
+				}
+			});
 		});
 	};
 
@@ -128,7 +153,7 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 HomeAddContent.propTypes = {
 	date: PropTypes.number,
 	closeModal: PropTypes.func.isRequired,
-	checkDate:PropTypes.func
+	checkDate: PropTypes.func
 };
 
 export default HomeAddContent;

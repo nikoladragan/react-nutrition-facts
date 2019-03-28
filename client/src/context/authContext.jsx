@@ -6,7 +6,7 @@ const initialState = {
 	isAuthenticated: false
 };
 
-const reducer1 = (state, action) => {
+const reducer = (state, action) => {
 	switch (action.type) {
 		case 'setAuth':
 			return { ...state, isAuthenticated: action.data };
@@ -16,8 +16,8 @@ const reducer1 = (state, action) => {
 };
 
 const AuthProvider = props => {
-	const [ authState, authDispatch ] = useReducer(reducer1, initialState);
-	const value = { authState, authDispatch };
+	const [ state, dispatch ] = useReducer(reducer, initialState);
+	const value = { state, dispatch };
 
 	return (
 		<AuthContext.Provider value={value}>

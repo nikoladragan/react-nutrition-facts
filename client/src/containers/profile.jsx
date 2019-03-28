@@ -7,7 +7,7 @@ import { GOAL_DATA, ACTIVITY_DATA, GENDER_DATA } from '../constants';
 import { NotificationContext } from '../context/notificationContext';
 
 const ProfilePage = () => {
-	const { userState, userDispatch } = useContext(UserDataContext);
+	const { state: userState, dispatch: userDispatch } = useContext(UserDataContext);
 	const { dispatch: notificationDispatch } = useContext(NotificationContext);
 
 	const [ name, setName ] = useState();
@@ -83,7 +83,8 @@ const ProfilePage = () => {
 				notificationDispatch({
 					type: 'addNewNotification',
 					data: {
-						name: 'Profile saved'
+						name: 'Profile saved',
+						type: 'good'
 					}
 				});
 

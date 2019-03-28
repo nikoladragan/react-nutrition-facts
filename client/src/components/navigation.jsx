@@ -3,12 +3,10 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { logout } from '../services/userService';
 import { AuthContext } from '../context/authContext';
 import { NAV_DATA } from '../constants';
-import { MenuContext } from '../context/menuContext';
 
 const Navigation = ({ history }) => {
-	const { menuState: menuStateContext } = useContext(MenuContext);
-	const [ menuState, setMenuState ] = useState(menuStateContext);
-	const { authState, authDispatch } = useContext(AuthContext);
+	const [ menuState, setMenuState ] = useState();
+	const { state: authState, dispatch: authDispatch } = useContext(AuthContext);
 	const isAuth = authState.isAuthenticated;
 	const canMove = useRef(false);
 	const clientX = useRef(0);
@@ -44,10 +42,6 @@ const Navigation = ({ history }) => {
 			root.addEventListener('touchend', e => handleTouchEnd(e));
 		}
 	}, [ handleTouchEnd, handleTouchMove, handleTouchStart ]);
-
-	useEffect(() => {
-		setMenuState(menuStateContext);
-	}, [ menuStateContext ]);
 
 	const menuToggleEvent = () => {
 		setMenuState(!menuState);

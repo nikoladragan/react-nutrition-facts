@@ -2,7 +2,8 @@
 	.nav__list {
 		transform: translate(0, 0);
 	}
-	+ .main {
+	~ .main,
+	~ .notifications {
 		filter: blur(10px);
 	}
 }

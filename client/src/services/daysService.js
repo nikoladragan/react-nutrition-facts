@@ -1,5 +1,5 @@
 // import { getFoodById } from './foodService';
-import { getLocalStorage, generateId } from '../helpers/helpers';
+import { getLocalStorage, generateId, cleanArray } from '../helpers/helpers';
 
 export const getDay = (date, id) => new Promise((resolve, reject) => {
 	const days = localStorage.getItem('days');
@@ -105,9 +105,9 @@ export const saveDay = data => new Promise((resolve, reject) => {
 	const day = days[date][id];
 
 	let finalData = {};
-
 	if (day.meals) {
 		finalData = {
+			...day,
 			meals: day.meals
 		};
 
@@ -119,6 +119,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 
 	} else {
 		finalData = {
+			...day,
 			meals: [
 				{
 					id: generateId(),
@@ -132,7 +133,7 @@ export const saveDay = data => new Promise((resolve, reject) => {
 	days[date][id] = finalData;
 
 	localStorage.setItem('days', JSON.stringify(days));
-	resolve('done!');
+	resolve('Meal saved!');
 });
 
 export const getMealFromDay = (userId, dayId, mealId) => new Promise((resolve) => {
@@ -141,6 +142,22 @@ export const getMealFromDay = (userId, dayId, mealId) => new Promise((resolve) =
 	const meal = meals.filter(m => m.id === mealId);
 
 	resolve(meal[0]);
+});
+
+export const getFilledDays = userId => new Promise((resolve) => {
+	const days = getLocalStorage('days');
+	const keys = Object.keys(days);
+	const filteredDays = cleanArray(keys.map(k => {
+		if (days[k][userId].meals) {
+			const ret = {
+				...days[k][userId],
+				dateId: k
+			};
+			return ret;
+		}
+	}));
+
+	resolve(filteredDays);
 });
 
 const expandMeal = id => {

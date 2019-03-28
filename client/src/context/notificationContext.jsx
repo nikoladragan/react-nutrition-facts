@@ -14,14 +14,6 @@ const reducer = (state, action) => {
 		case 'removeNotification':
 			array = state.filter(s => s.id !== action.data);
 			return array;
-		case 'activateTimer':
-			// console.log('activateTimer', action.data);
-			array = action.data.map(s => {
-				s.timerActivated = true;
-				return s;
-			});
-			// console.log('after mutate', action.data, array);
-			return state;
 		default:
 			return state;
 	}

@@ -7,18 +7,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { UserDataProvider } from './context/userDataContext';
 import { AuthProvider } from './context/authContext';
-import { MenuProvider } from './context/menuContext';
 import { NotificationProvider } from './context/notificationContext';
 
 const app =
 	<BrowserRouter>
 		<AuthProvider>
 			<UserDataProvider>
-				<MenuProvider>
-					<NotificationProvider>
-						<App></App>
-					</NotificationProvider>
-				</MenuProvider>
+				<NotificationProvider>
+					<App></App>
+				</NotificationProvider>
 			</UserDataProvider>
 		</AuthProvider>
 	</BrowserRouter>
