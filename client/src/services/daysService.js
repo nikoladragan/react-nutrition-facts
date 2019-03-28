@@ -146,13 +146,55 @@ export const getMealFromDay = (userId, dayId, mealId) => new Promise((resolve) =
 
 export const getFilledDays = userId => new Promise((resolve) => {
 	const days = getLocalStorage('days');
-	const keys = Object.keys(days);
+	const keys = Object.keys(days).sort();
 	const filteredDays = cleanArray(keys.map(k => {
 		if (days[k][userId].meals) {
 			const ret = {
 				...days[k][userId],
 				dateId: k
 			};
+
+			if (ret.meals) {
+				const expandedData = ret.meals.map(({ ...d }) => {
+					const mealType = getMealTypeLabel(d.mealType);
+
+					d.mealType = mealType;
+
+					d.calories = 0;
+					d.protein = 0;
+					d.carbs = 0;
+					d.fat = 0;
+
+					d.content = d.content.map(c => {
+						const meal = expandMeal(c.id);
+						meal.calories = parseInt(meal.calories * (c.amount / 100));
+						meal.amount = c.amount;
+
+						d.calories += meal.calories;
+						d.protein += meal.protein;
+						d.carbs += meal.carbs.total;
+						d.fat += meal.fat.total;
+
+						return meal;
+					});
+
+					return d;
+				});
+
+				ret.meals = expandedData;
+				ret.calories = 0;
+				ret.protein = 0;
+				ret.carbs = 0;
+				ret.fat = 0;
+
+				ret.meals.forEach(m => {
+					ret.calories += m.calories;
+					ret.protein += m.protein;
+					ret.carbs += m.carbs;
+					ret.fat += m.fat;
+				});
+			}
+
 			return ret;
 		}
 	}));

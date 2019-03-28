@@ -54,8 +54,6 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 	}, [ meals ]);
 
 	const handleAmountChange = (id, value) => {
-		console.log('handleAmountChange');
-
 		const updatedMeals = meals.map(m => {
 			if (id === m.id) m.amount = parseInt(value);
 			return m;

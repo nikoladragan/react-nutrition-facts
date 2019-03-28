@@ -62,3 +62,5 @@ export const isEmpty = a => {
 };
 
 export const cleanArray = a => a.filter(el => el != null); // eslint-disable-line
+
+export const getFormattedDate = date => new Date(parseInt(date)).toDateString();
