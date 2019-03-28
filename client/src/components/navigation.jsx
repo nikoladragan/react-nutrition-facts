@@ -78,7 +78,6 @@ const Navigation = ({ history }) => {
 							showItem(n) &&
 						<li className="nav__item" key={n.text}>
 							<NavLink
-								exact
 								className="nav__link"
 								activeClassName="nav__link--active"
 								onClick={() => menuToggleEvent()} to={n.url}>{n.text}</NavLink>

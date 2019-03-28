@@ -11,7 +11,7 @@ const Meal = ({ m, direction, date }) => {
 	let element = null;
 
 	useEffect(() => {
-		const x = direction === 'left' ? [ -100, 0 ] : direction ==='right' ? [ 100, 0 ] : [ 0, 0 ];
+		const x = direction === 'left' ? [ -200, 0 ] : direction ==='right' ? [ 200, 0 ] : [ 0, 0 ];
 		const y = direction === 'bottom' ? [ 100, 0 ] : [ 0, 0 ];
 
 		anime({
