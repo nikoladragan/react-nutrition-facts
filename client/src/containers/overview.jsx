@@ -23,19 +23,19 @@ const OverviewPage = () => {
 			<Heading level={1}>Overview</Heading>
 			{data.map(d => {
 				return <div className="card card--show" key={d.dateId}>
-					{getFormattedDate(d.dateId)}
-					<div>
-						{d.meals.map(m => {
-							return <div key={m.id}>
-								<Heading level={5} modifiers="small">{m.mealType}</Heading>
-								<ul>
-									{m.content.map(c => {
-										return <li key={c.id}>{c.name}</li>;
-									})}
-								</ul>
-							</div>;
-						})}
+					<div className="card__item">
+						<Heading level={2} modifiers={'small'}>{getFormattedDate(d.dateId)}</Heading>
 					</div>
+					{d.meals.map(m => {
+						return <div key={m.id} className="card__item">
+							<Heading level={3} modifiers="small">{m.mealType}</Heading>
+							<ul>
+								{m.content.map(c => {
+									return <li key={c.id}>{c.name}</li>;
+								})}
+							</ul>
+						</div>;
+					})}
 				</div>;
 			})}
 		</div>

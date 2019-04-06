@@ -4,6 +4,10 @@ import { AuthContext } from '../context/authContext';
 import { UserDataContext } from '../context/userDataContext';
 import Heading from '../components/layout/heading';
 import { NotificationContext } from '../context/notificationContext';
+import Form from '../components/forms/form';
+import FormRow from '../components/forms/form-row';
+import Input from '../components/forms/input';
+import FormSubmitButton from '../components/forms/submit';
 
 const LoginPage = () => {
 	const { dispatch: authDispatch } = useContext(AuthContext);
@@ -20,15 +24,17 @@ const LoginPage = () => {
 				res => {
 					const data = res;
 					localStorage.setItem('app-token', data.token);
-
 					authDispatch({
 						type: 'setAuth',
-						data: true
+						data: {
+							auth: true,
+							admin: data.user.isAdmin
+						}
 					});
 
 					userDispatch({
 						type: 'setInitialData',
-						data: res.user.data
+						data: data.user.data
 					});
 				}
 			)
@@ -44,31 +50,34 @@ const LoginPage = () => {
 	};
 
 	return (
-		<div>
+		<>
 			<Heading level={1}>Login</Heading>
-			<form className="form">
-				<div className="form__row">
-					<input
-						className="form__input"
-						type="text"
-						onChange={e => setUsername(e.target.value)}
-						placeholder="Username"/>
-				</div>
-				<div className="form__row">
-					<input
-						className="form__input"
+			<Form>
+				<FormRow>
+					<Input
+						label="Username"
+						callback={e => setUsername(e.target.value)}
+						name="username"
+						value={username}
+						placeholder="Username"
+					/>
+				</FormRow>
+				<FormRow>
+					<Input
+						label="Password"
+						callback={e => setPassword(e.target.value)}
+						name="password"
+						value={password}
+						placeholder="Password"
 						type="password"
-						onChange={e => setPassword(e.target.value)}
-						placeholder="Password"/>
-				</div>
-				<button
-					className="form__submit"
-					type="button"
-					onClick={() => submit()}>Login</button>
-			</form>
-			username: {username} <br />
-			password: {password}
-		</div>
+					/>
+				</FormRow>
+				<FormSubmitButton
+					text="Login"
+					callback={submit}
+				/>
+			</Form>
+		</>
 	);
 };
 

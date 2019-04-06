@@ -29,7 +29,7 @@ Input.propTypes = {
 	type: PropTypes.string,
 	placeholder: PropTypes.string,
 	label: PropTypes.string,
-	name: PropTypes.string,
+	name: PropTypes.string.isRequired,
 	callback: PropTypes.func,
 	value: PropTypes.oneOfType([
 		PropTypes.string,

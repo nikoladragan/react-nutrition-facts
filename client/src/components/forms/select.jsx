@@ -11,7 +11,7 @@ const Select = ({ label, name, value, callback, data }) => {
 					defaultValue={value}
 					onChange={callback}>
 					{data.map(d => {
-						return <option key={d.text} value={d.value}>{d.text}</option>;
+						return <option key={d.text} value={d.value} disabled={d.disable}>{d.text}</option>;
 					})}
 				</select>
 		</>

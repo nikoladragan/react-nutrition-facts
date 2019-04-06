@@ -10,9 +10,9 @@ import HomeContent from '../components/home/content';
 import HomeAddContent from '../components/home/popupContent';
 import NoContent from '../components/home/noContent';
 
-import { ReactComponent as IconAdd } from '../assets/icons/add.svg';
 import Warning from '../components/shared/warning';
 import Heading from '../components/layout/heading';
+import AddDataButton from '../components/home/add-data-button';
 
 const HomePage = ({ match, history }) => {
 	const [ day, setDay ] = useState({});
@@ -115,18 +115,14 @@ const HomePage = ({ match, history }) => {
 
 	return (
 		<div className="home">
-			<ProgressBar { ...calculateCaloriesPercentage() } show={!!day.meals}/>
+			<ProgressBar { ...calculateCaloriesPercentage() } show={!isEmpty(day.meals)}/>
 			{!isEmpty(userState) && <Heading level={1} modifiers="small">Hi {userState.name}!</Heading>}
-			<Route
-				path={`${match.url}/:date`}
+			<Route path={`${match.url}/:date`}
 				render={props => <DaysNavigation {...props} setDate={setDate}/>} />
-			{tooMuchCalories && <Warning>Ups!</Warning>}
-			{day.meals && <HomeContent direction={direction} content={day} date={date}/>}
-			{!day.meals && <NoContent />}
-			<button className="button-action"onClick={() => toggleModal(!modalVisible)}>
-				<span className="sr-only">Add data</span>
-				<IconAdd />
-			</button>
+			{tooMuchCalories && <Warning />}
+			{day.meals && <HomeContent direction={direction} content={day} date={date} setDay={setDay}/>}
+			{isEmpty(day.meals) && <NoContent />}
+			<AddDataButton callback={toggleModal} modalVisible={modalVisible} />
 			{modalVisible && <HomeAddContent checkDate={setCheckDate} date={date} closeModal={handleCloseModal}/>}
 		</div>
 	);

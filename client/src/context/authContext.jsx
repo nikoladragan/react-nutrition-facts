@@ -9,7 +9,11 @@ const initialState = {
 const reducer = (state, action) => {
 	switch (action.type) {
 		case 'setAuth':
-			return { ...state, isAuthenticated: action.data };
+			return {
+				...state,
+				isAuthenticated: action.data.auth,
+				isAdmin: action.data.admin
+			};
 		default:
 			return state;
 	}

@@ -202,13 +202,30 @@ export const getFilledDays = userId => new Promise((resolve) => {
 	resolve(filteredDays);
 });
 
+export const deleteMeal = (userId, dayId, mealId) => new Promise((resolve) => {
+	const days = getLocalStorage('days');
+	const updatedMeals = days[dayId][userId].meals.filter(m => m.id !== mealId);
+
+	days[dayId][userId].meals = updatedMeals;
+
+	localStorage.setItem('days', JSON.stringify(days));
+
+	getDay(dayId, userId).then(res => {
+		resolve({
+			message: 'Meal Deleted',
+			data: res
+		});
+	});
+});
+
+
+// local functions
 const expandMeal = id => {
 	const meals = getLocalStorage('food');
 
 	return meals.filter(m => m.id === id)[0];
 };
 
-// local functions
 const getMealTypeLabel = (number) => {
 	switch (number) {
 		case 1:

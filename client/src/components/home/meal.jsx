@@ -1,13 +1,17 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Heading from '../layout/heading';
 import anime from 'animejs';
 import { UserDataContext } from '../../context/userDataContext';
 import { PropTypes } from 'prop-types';
 import { ANIMATION_DEFAULTS } from '../../constants';
-import { getMealFromDay } from '../../services/daysService';
+import { deleteMeal } from '../../services/daysService';
+import { NotificationContext } from '../../context/notificationContext';
 
-const Meal = ({ m, direction, date }) => {
+const Meal = ({ m, direction, date, setDay }) => {
+	// const [ data, setData ] = useState(m);
 	const { state: userState } = useContext(UserDataContext);
+	const { dispatch: notificationDispatch } = useContext(NotificationContext);
+
 	let element = null;
 
 	useEffect(() => {
@@ -25,13 +29,17 @@ const Meal = ({ m, direction, date }) => {
 	}, [ direction, element ]);
 
 
-	const handleMealEdit = id => {
-		getMealFromDay(userState.id, date, id)
+	const handleMealDelete = id => {
+		deleteMeal(userState.id, date, id)
 			.then(res => {
-				console.log(res);
-			})
-			.catch(err => {
-				console.log('err', err);
+				notificationDispatch({
+					type: 'addNewNotification',
+					data: {
+						name: res.message,
+						type: 'good'
+					}
+				});
+				setDay(res.data);
 			});
 	};
 
@@ -40,7 +48,7 @@ const Meal = ({ m, direction, date }) => {
 			ref={div => element = div}
 			className="card">
 			<Heading modifiers="small">{m.mealType} - {m.calories}kcal</Heading>
-			<button className="card__button" onClick={() => handleMealEdit(m.id)}>edit</button>
+			<button className="card__button" onClick={() => handleMealDelete(m.id)}>delete</button>
 			<div>
 				{m.content.map(c => {
 					return <div
@@ -62,7 +70,8 @@ const Meal = ({ m, direction, date }) => {
 Meal.propTypes = {
 	m: PropTypes.object,
 	direction: PropTypes.string,
-	date: PropTypes.number
+	date: PropTypes.number,
+	setDay: PropTypes.func
 };
 
 export default Meal;

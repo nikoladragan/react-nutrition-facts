@@ -8,6 +8,7 @@ const Navigation = ({ history }) => {
 	const [ menuState, setMenuState ] = useState();
 	const { state: authState, dispatch: authDispatch } = useContext(AuthContext);
 	const isAuth = authState.isAuthenticated;
+	const isAdmin = authState.isAdmin;
 	const canMove = useRef(false);
 	const clientX = useRef(0);
 
@@ -65,7 +66,8 @@ const Navigation = ({ history }) => {
 	const showAlways = (show) => show === 1;
 	const showIfLoggedIn = (show) => isAuth && show === 2;
 	const showIfNotLoggedIn = (show) => show === 3 && !isAuth;
-	const showItem = (n) => showAlways(n.show) || showIfLoggedIn(n.show) || showIfNotLoggedIn(n.show);
+	const showIfAdmin = (show) => show === 4 && isAdmin;
+	const showItem = (n) => showAlways(n.show) || showIfLoggedIn(n.show) || showIfNotLoggedIn(n.show) || showIfAdmin(n.show);
 
 
 	return (

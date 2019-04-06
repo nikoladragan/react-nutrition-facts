@@ -1,10 +1,15 @@
 import React, { useContext, useState, useEffect } from 'react';
-import Input from '../components/input';
+import Input from '../components/forms/input';
 import { UserDataContext } from '../context/userDataContext';
-import Select from '../components/select';
+import Select from '../components/forms/select';
 import { updateUserData } from '../services/userService';
 import { GOAL_DATA, ACTIVITY_DATA, GENDER_DATA } from '../constants';
 import { NotificationContext } from '../context/notificationContext';
+import { isEmpty } from '../helpers/helpers';
+import Heading from '../components/layout/heading';
+import FormRow from '../components/forms/form-row';
+import FormSubmitButton from '../components/forms/submit';
+import Form from '../components/forms/form';
 
 const ProfilePage = () => {
 	const { state: userState, dispatch: userDispatch } = useContext(UserDataContext);
@@ -78,29 +83,53 @@ const ProfilePage = () => {
 
 		data.calories = getBMR(data);
 
-		updateUserData(data)
-			.then(res => {
-				notificationDispatch({
-					type: 'addNewNotification',
-					data: {
-						name: 'Profile saved',
-						type: 'good'
-					}
-				});
+		if (isFormValid(data)) {
+			updateUserData(data)
+				.then(res => {
+					notificationDispatch({
+						type: 'addNewNotification',
+						data: {
+							name: 'Profile saved',
+							type: 'good'
+						}
+					});
 
-				userDispatch({
-					type: 'setInitialData',
-					data: res
+					userDispatch({
+						type: 'setInitialData',
+						data: res
+					});
 				});
+		} else {
+			notificationDispatch({
+				type: 'addNewNotification',
+				data: {
+					name: 'Please fill all the fields',
+					type: 'bad'
+				}
 			});
+		}
 	};
 
-	if (!userState.activity) return '';
+	const isFormValid = data => {
+		let arrayGood = true;
+		const array = Object.keys(data).filter(d => d !== 'profileSetUp' && d !== 'id');
+
+		for (let i = 0; i < array.length; i++) {
+			const v = data[array[i]];
+			if (isEmpty(v)) {
+				arrayGood = false;
+				break;
+			}
+		}
+
+		return arrayGood;
+	};
 
 	return (
-		<div>
-			<div className="form">
-				<div className="form__row">
+		<>
+			<Heading level={2}>Profile</Heading>
+			<Form>
+				<FormRow>
 					<Input
 						label="Name"
 						type="text"
@@ -108,8 +137,8 @@ const ProfilePage = () => {
 						name="name"
 						value={name}
 						callback={(e) => setName(e.target.value)} />
-				</div>
-				<div className="form__row">
+				</FormRow>
+				<FormRow>
 					<Input
 						label="Age"
 						type="number"
@@ -117,8 +146,8 @@ const ProfilePage = () => {
 						name="age"
 						value={age}
 						callback={(e) => setAge(e.target.value)} />
-				</div>
-				<div className="form__row">
+				</FormRow>
+				<FormRow>
 					<Input
 						label="Height"
 						type="number"
@@ -127,8 +156,8 @@ const ProfilePage = () => {
 						value={height}
 						defaultValue={userState.height}
 						callback={(e) => setHeight(e.target.value)} />
-				</div>
-				<div className="form__row">
+				</FormRow>
+				<FormRow>
 					<Input
 						label="Weight"
 						type="number"
@@ -137,41 +166,38 @@ const ProfilePage = () => {
 						value={weight}
 						defaultValue={userState.weight}
 						callback={(e) => setWeight(e.target.value)} />
-				</div>
-				<div className="form__row">
+				</FormRow>
+				<FormRow>
 					<Select
 						label="Gender"
 						name="gender"
-						value={userState.gender}
+						value={userState.gender || GENDER_DATA[0].value}
 						data={GENDER_DATA}
 						callback={(e) => setGender(e.target.value)} />
-				</div>
-				<div className="form__row">
+				</FormRow>
+				<FormRow>
 					<Select
 						label="Activity level"
 						name="activity"
-						value={userState.activity}
+						value={userState.activity || ACTIVITY_DATA[0].value}
 						data={ACTIVITY_DATA}
 						callback={(e) => setActivity(e.target.value)} />
-				</div>
-				<div className="form__row">
+				</FormRow>
+				<FormRow>
 					<Select
 						label="Goal"
 						name="goal"
-						value={userState.goal}
+						value={userState.goal || GOAL_DATA[0].value}
 						data={GOAL_DATA}
 						callback={(e) => setGoal(e.target.value)} />
-				</div>
-				<div className="form__action">
-					<button
-						className="form__submit"
-						type="button"
-						onClick={saveUserData}>Save</button>
-				</div>
-			</div>
+				</FormRow>
+				<FormSubmitButton
+					callback={saveUserData}
+					text="Save profile"/>
+			</Form>
 			<hr />
 			{userState.calories ? `calories: ${userState.calories}` : null}
-		</div>
+		</>
 	);
 };
 

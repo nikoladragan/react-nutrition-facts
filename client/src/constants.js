@@ -1,6 +1,11 @@
 // Select data
 export const GENDER_DATA = [
 	{
+		text: 'Select gender',
+		value: 'select',
+		disable: true
+	},
+	{
 		text: 'Male',
 		value: 'male'
 	},
@@ -10,6 +15,11 @@ export const GENDER_DATA = [
 	}
 ];
 export const ACTIVITY_DATA = [
+	{
+		text: 'Select activity level',
+		value: 'select',
+		disable: true
+	},
 	{
 		text: 'Sedentary',
 		value: 1
@@ -33,6 +43,11 @@ export const ACTIVITY_DATA = [
 ];
 export const GOAL_DATA = [
 	{
+		text: 'Select goal',
+		value: 'select',
+		disable: true
+	},
+	{
 		text: 'Lose weight',
 		value: 1
 	},
@@ -46,6 +61,11 @@ export const GOAL_DATA = [
 	}
 ];
 export const MEAL_TYPE_DATA = [
+	{
+		text: 'Select meal type',
+		value: 'select',
+		disable: true
+	},
 	{
 		text: 'Breakfast',
 		value: 1
@@ -79,7 +99,7 @@ export const NAV_DATA = [
 	{
 		url: '/admin',
 		text: 'Admin',
-		show: 1
+		show: 4
 	},
 	{
 		url: '/login',

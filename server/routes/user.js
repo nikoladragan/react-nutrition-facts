@@ -70,12 +70,10 @@ router.post('/login', (req, res) => {
 		return res.status(500).json(data(false, invalidData));
 	}
 
-	console.log(b);
 
 	User.find({
 		username: b.username
 	}, (err, result) => {
-		console.log('?', result);
 		if (err) {
 			return res.status(500).json(data(false, 'Server error'));
 		} else if (result.length > 0) {

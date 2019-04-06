@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Heading from '../layout/heading';
-import Input from '../input';
+import Input from '../forms/input';
 import { getFood, getFoodById } from '../../services/foodService';
 import { isEmpty } from '../../helpers/helpers';
-import Select from '../select';
+import Select from '../forms/select';
 import { MEAL_TYPE_DATA } from '../../constants';
 import { PropTypes } from 'prop-types';
 import { UserDataContext } from '../../context/userDataContext';
@@ -11,6 +11,9 @@ import Modal from '../modal';
 import { saveDay } from '../../services/daysService';
 import MealFilter from './mealFilter';
 import { NotificationContext } from '../../context/notificationContext';
+import Form from '../forms/form';
+import FormRow from '../forms/form-row';
+import FormSubmitButton from '../forms/submit';
 
 
 const HomeAddContent = ({ date, closeModal, checkDate }) => {
@@ -110,40 +113,38 @@ const HomeAddContent = ({ date, closeModal, checkDate }) => {
 
 	return (
 		<Modal closeModal={handleCloseModal}>
-			<div>
+			<>
 				<Heading level={2} modifier={'small'}>Add meals</Heading>
-				<div className="form">
-					<div className="form__row">
+				<Form>
+					<FormRow>
 						<Select
 							label="Meal type"
 							name="meal-type"
-							value={mealType}
+							value={MEAL_TYPE_DATA[0].value}
 							data={MEAL_TYPE_DATA}
 							callback={handleSelectChange} />
-					</div>
-					<div className="form__row">
+					</FormRow>
+					<FormRow>
 						<Input
 							value={input}
 							placeholder="Type something..."
 							callback={handleInputChange}
 							name={`nebitno${Math.random()}`} />
-					</div>
+					</FormRow>
 					{!isEmpty(food) &&
-						<MealFilter data={food} addMealCallback={addMealToState} />
+						<FormRow>
+							<MealFilter data={food} addMealCallback={addMealToState} />
+						</FormRow>
 					}
 					{!isEmpty(expandedMeals) &&
-						<>
+						<FormRow>
 							{'Picked food'}
 							<MealFilter data={expandedMeals} addAmountCallback={handleAmountChange} />
-						</>
+						</FormRow>
 					}
-					{meals &&
-						<div className="form__action">
-							<button className="form__submit" onClick={saveMeals}>Add day</button>
-						</div>
-					}
-				</div>
-			</div>
+					{meals && <FormSubmitButton callback={saveMeals} text="Add day"/>}
+				</Form>
+			</>
 		</Modal>
 	);
 };

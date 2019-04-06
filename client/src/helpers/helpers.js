@@ -40,6 +40,7 @@ export const isEmpty = a => {
 	// null and undefined are "empty"
 	if (a === null) return true;
 	if (a === undefined) return true;
+	if (typeof a === 'number') return false;
 
 	// Assume if it has a length property with a non-zero value
 	// that that property is correct.

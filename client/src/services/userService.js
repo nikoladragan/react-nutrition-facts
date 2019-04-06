@@ -111,8 +111,7 @@ export const register = data => new Promise((resolve, reject) => {
 			banned: false,
 			activated: true,
 			data: {
-				profileSetUp: false,
-				activity: 1
+				profileSetUp: false
 			}
 		};
 
@@ -131,6 +130,7 @@ export const updateUserData = data => new Promise((resolve, reject) => {
 
 	if (result) {
 		result.data = data;
+		result.data.profileSetUp = true;
 		leftover.push(result);
 		localStorage.setItem('users', JSON.stringify(users));
 
