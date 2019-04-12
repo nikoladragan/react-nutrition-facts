@@ -44,6 +44,7 @@ const RegisterPage = (props) => {
 			<Form>
 				<FormRow>
 					<Input
+						label="Username"
 						callback={e => setUsername(e.target.value)}
 						name="username"
 						value={username}
@@ -52,6 +53,7 @@ const RegisterPage = (props) => {
 				</FormRow>
 				<FormRow>
 					<Input
+						label="Password"
 						callback={e => setPassword(e.target.value)}
 						name="password"
 						value={password}

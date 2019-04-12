@@ -17,7 +17,7 @@ const MealFilter = ({ data, addMealCallback, addAmountCallback }) => {
 								<input type="number" onChange={(e) => addAmountCallback(d.id, e.target.value)}/>
 							</span>
 					}
-					<span>info?</span>
+					<span>{d.calories}<small>kcal per 100gr</small></span>
 				</div>;
 			})}
 		</div>

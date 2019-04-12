@@ -47,7 +47,6 @@ const Routes = () => {
 
 		}
 
-		console.log(isAdmin);
 		getFood();
 	}, [ authDispatch, isAdmin, userDispatch ]);
 

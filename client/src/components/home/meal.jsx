@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Heading from '../layout/heading';
 import anime from 'animejs';
 import { UserDataContext } from '../../context/userDataContext';

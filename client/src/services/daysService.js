@@ -148,8 +148,9 @@ export const getFilledDays = userId => new Promise((resolve) => {
 	const days = getLocalStorage('days');
 	const keys = Object.keys(days).sort();
 	const filteredDays = cleanArray(keys.map(k => {
+		let ret = null;
 		if (days[k][userId].meals) {
-			const ret = {
+			ret = {
 				...days[k][userId],
 				dateId: k
 			};
@@ -194,9 +195,8 @@ export const getFilledDays = userId => new Promise((resolve) => {
 					ret.fat += m.fat;
 				});
 			}
-
-			return ret;
 		}
+		return ret;
 	}));
 
 	resolve(filteredDays);
