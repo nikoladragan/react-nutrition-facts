@@ -10,12 +10,14 @@ const Modal = ({ children, closeModal }) => {
 	let modalContainer = null;
 
 	useEffect(() => {
+		// modal
 		anime({
 			targets: modal,
 			opacity: [ 0, 1 ],
 			...ANIMATION_DEFAULTS,
 		});
 
+		// modalContainer
 		anime({
 			targets: modalContainer,
 			delay: ANIMATION_DURATION / 2,

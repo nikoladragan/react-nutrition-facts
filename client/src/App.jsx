@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Navigation from './components/navigation';
 import NotificationComponent from './components/notification';
 import Routes from './components/routes';
+import { NotificationContext } from './context/notificationContext';
 
 function App() {
+	const { state: notificationState } = useContext(NotificationContext);
 	const css = {
 		height: `${window.innerHeight}px`
 	};
@@ -14,7 +16,7 @@ function App() {
 			<main className="main">
 				<Routes />
 			</main>
-			<NotificationComponent />
+			{ notificationState.length > 0 && <NotificationComponent /> }
 		</div>
 	);
 }

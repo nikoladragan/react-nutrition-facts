@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { ReactComponent as IconAdd } from '../../assets/icons/add.svg';
 import { PropTypes } from 'prop-types';
 
@@ -17,4 +17,5 @@ AddDataButton.propTypes = {
 	modalVisible: PropTypes.bool.isRequired
 };
 
-export default AddDataButton;
+// export default AddDataButton;
+export default memo(AddDataButton);

@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, memo } from 'react';
 import { NotificationContext } from '../context/notificationContext';
 import NotificationField from './notificationsField';
 
 const NotificationComponent = () => {
-	const [ notifications, setNotification ] = useState([]);
 	const { state: notificationState } = useContext(NotificationContext);
+	const [ notifications, setNotification ] = useState(notificationState);
 
 	useEffect(() => {
 		setNotification(notificationState);
@@ -19,4 +19,4 @@ const NotificationComponent = () => {
 	);
 };
 
-export default NotificationComponent;
+export default memo(NotificationComponent);

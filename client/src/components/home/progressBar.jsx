@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 
 const ProgressBar = ({ p, c, f, bar, overMaximum, show }) => {
@@ -33,4 +33,4 @@ ProgressBar.propTypes = {
 	show: PropTypes.bool
 };
 
-export default ProgressBar;
+export default memo(ProgressBar);

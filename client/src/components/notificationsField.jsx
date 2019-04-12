@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useCallback, useRef } from 'react';
+import React, { useEffect, useContext, useCallback, useRef, memo } from 'react';
 import { PropTypes } from 'prop-types';
 import anime from 'animejs';
 import { ANIMATION_DEFAULTS, ANIMATION_DURATION } from '../constants';
@@ -81,4 +81,4 @@ NotificationField.propTypes = {
 	type: PropTypes.string
 };
 
-export default NotificationField;
+export default memo(NotificationField);

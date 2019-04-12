@@ -8,7 +8,6 @@ import { deleteMeal } from '../../services/daysService';
 import { NotificationContext } from '../../context/notificationContext';
 
 const Meal = ({ m, direction, date, setDay }) => {
-	// const [ data, setData ] = useState(m);
 	const { state: userState } = useContext(UserDataContext);
 	const { dispatch: notificationDispatch } = useContext(NotificationContext);
 
